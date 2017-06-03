@@ -1,0 +1,106 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">
+		<h:outputText value="#{etiquetas['seleccione.una.opcion']}" />
+	</ui:define>
+
+	<ui:define name="content">
+
+		<h:form>
+			<p:growl id="msg" autoUpdate="true" />
+			<div class="ui-g dashboard">
+				<div class="ui-g-12 ui-md-4">
+					<div class="card overview">
+						<div class="overview-content clearfix">
+							<span class="overview-title">Ganancias</span> <span
+								class="overview-badge">+%90</span> <span class="overview-detail">$960
+								/ Semana</span>
+						</div>
+						<div class="overview-footer">
+							<p:graphicImage name="images/dashboard/sales.svg"
+								library="ultima-layout" style="width: 100%" />
+						</div>
+					</div>
+				</div>
+				<div class="ui-g-12 ui-md-4">
+					<div class="card overview">
+						<div class="overview-content clearfix">
+							<span class="overview-title">Pacientes</span> <span
+								class="overview-badge">+%60</span> <span class="overview-detail">47
+								/ Semana</span>
+						</div>
+						<div class="overview-footer">
+							<p:graphicImage name="images/dashboard/views.svg"
+								library="ultima-layout" style="width: 100%" />
+						</div>
+					</div>
+				</div>
+				<div class="ui-g-12 ui-md-4">
+					<div class="card overview">
+						<div class="overview-content clearfix">
+							<span class="overview-title">Consulta</span> <span
+								class="overview-badge">+%45</span> <span class="overview-detail">34
+								/ semana</span>
+						</div>
+						<div class="overview-footer">
+							<p:graphicImage name="images/dashboard/progress.svg"
+								library="ultima-layout" style="width: 100%" />
+						</div>
+					</div>
+				</div>
+			</div>
+
+				<p:dataTable id="itemsTable"
+					emptyMessage="#{etiquetas['no.existen.registros']}"
+					value="#{registroClaseCtrl.registros}" var="item"
+					style="width:100%"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+					paginator="true" rows="10">
+					<p:column headerText="Código Paciente" style="width:150px;">
+						<h:outputText value="#{item.id}" />
+					</p:column>
+					<p:column headerText="Nombre Paciente"
+						style="width:150px;">
+						<h:outputText value="#{item.semestre.nombre}" />
+					</p:column>
+					<p:column headerText="Fecha y hora Cita" style="width:150px;">
+						<h:outputText value="#{item.fechaCreacion}" />
+					</p:column>
+					<p:column headerText="#{etiquetas['materia']}" style="width:150px;">
+						<h:outputText value="#{item.materia.nombre}" />
+					</p:column>
+					
+					<p:column headerText="Comentario"
+						style="width:150px;">
+						<h:outputText value="#{item.comentarioProfesor}" />
+					</p:column>
+					
+					<p:column headerText="Atender" style="width:70px;"
+						styleClass="columnaCentrada">
+						<h:commandLink action="#{registroClaseCtrl.editar}"
+							title="#{etiquetas.editar}">
+							<h:graphicImage value="/img/edit.png" id="editImage"
+								style="width:20px; height:20px" />
+						</h:commandLink>
+					</p:column>
+					<!--  p:column style="width:70px;" styleClass="columnaCentrada"
+						headerText="#{etiquetas['eliminar.sistema']}">
+						<h:commandLink actionListener="#{parametroCtrl.eliminarParametro}"
+							title="#{etiquetas['eliminar.sistema']}"
+							onclick="if(!confirm('#{mensajes['esta.seguro']}'))return false;">
+							<h:graphicImage value="/img/delete.png" id="trashImage"
+								style="width:20px; height:20px" />
+							<f:ajax render="@form" />
+						</h:commandLink>
+					</p:column>-->
+				</p:dataTable>
+
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

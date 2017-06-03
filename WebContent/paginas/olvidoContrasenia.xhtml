@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<f:facet name="first">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+	</f:facet>
+	<title>MEDICUS</title>
+	<h:outputScript name="js/ripple.js" library="ultima-layout" />
+	<h:outputScript name="js/layout.js" library="ultima-layout" />
+</h:head>
+
+<h:body styleClass="login-body">
+
+	<div class="card login-panel ui-fluid">
+
+		<div class="ui-g-16">
+			<h:form id="formUsuario">
+				<p:growl id="growl" autoUpdate="true" />
+
+				<!-- Begin Right Column -->
+				<h:outputText value="#{etiquetas['ingreso.cedula']}" />
+				<h:panelGrid columns="2" styleClass="form-label,form-input">
+					<p:outputLabel value="#{etiquetas['usuario']}*:" />
+
+					<p:inputText id="cedula"
+						value="#{usuarioCtrl.usuario.identificacion}" required="true"
+						requiredMessage="#{etiquetas['numero.cedula']} #{mensajes['requerido.masculino']}"
+						maxlength="10">
+					</p:inputText>
+					<br/>
+					<br/>
+					<br/>
+				</h:panelGrid>
+				<h:panelGrid columns="2"
+					style="text-align: center;width:100%;font-size:12px">
+					<p:commandButton value="#{etiquetas['enviar']}"
+						action="#{usuarioCtrl.enviaContraseniaNueva}" update="@form" />
+						<p:commandButton value="Regresar"
+						action="/paginas/login?faces-redirect=true" immediate="true" update="@form" process="@this" />
+			
+				</h:panelGrid>
+
+
+			</h:form>
+
+		</div>
+	</div>
+	<h:outputStylesheet name="css/ripple.css" library="ultima-layout" />
+	<h:outputStylesheet name="css/layout-#{guestPreferences.theme}.css"
+		library="ultima-layout" />
+	<table style="width: 100%">
+		<tr>
+			<th><div align="left">
+					<h:graphicImage value="../img/tappslogo.png" title="Tapps"
+						style="width:300px; height:120px;" />
+
+
+				</div></th>
+			<th colspan="3"><h:form id="formRedes">
+
+					<font size="4" color="black">Búscanos en:</font>
+
+					<a href="http://www.facebook.com"> <img
+						src="../img/facebook-b.png" width="30px" height="30px" />
+					</a>
+					<a href="http://www.twitter.com"> <img
+						src="../img/twitter-b.png" width="30px" height="30px" />
+					</a>
+					<a href="https://plus.google.com/?hl=es"> <img
+						src="../img/google-b.png" width="30px" height="30px" />
+					</a>
+				</h:form></th>
+		</tr>
+	</table>
+</h:body>
+
+</html>
