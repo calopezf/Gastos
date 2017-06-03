@@ -98,7 +98,7 @@
   </security-constraint>
   <login-config>
     <auth-method>FORM</auth-method>
-    <realm-name>professorCheck-realm</realm-name>
+    <realm-name>modulosPlus-realm</realm-name>
     <form-login-config>
       <form-login-page>/paginas/login.jsf</form-login-page>
       <form-error-page>/paginas/error.jsf</form-error-page>

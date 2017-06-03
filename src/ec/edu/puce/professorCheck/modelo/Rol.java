@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import ec.edu.puce.professorCheck.constantes.EnumEstado;
 
 @Entity
-@Table(name = "ROL")
+@Table(name = "WdRol")
 public class Rol implements Serializable {
 
 	/**
@@ -23,7 +23,7 @@ public class Rol implements Serializable {
 	private static final long serialVersionUID = 7827644225154012814L;
 	@Id
 	@Column(name = "id")
-	private String id;// atado a RolEnum
+	private Integer id;// atado a RolEnum
 	@Column(name = "descripcion", length = 500)
 	private String descripcion;
 	@Column(name = "estado")
@@ -57,7 +57,7 @@ public class Rol implements Serializable {
 	/**
 	 * @return the id
 	 */
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
@@ -65,7 +65,7 @@ public class Rol implements Serializable {
 	 * @param id
 	 *            the id to set
 	 */
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

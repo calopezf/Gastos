@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="ProfessorCheck">
+    <wb-module deploy-name="ModulosPlus">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <property name="context-root" value="ProfessorCheck"/>
-        <property name="java-output-path" value="/ProfessorCheck/build/classes"/>
+        <property name="context-root" value="ModulosPlus"/>
+        <property name="java-output-path" value="/ModulosPlus/build/classes"/>
     </wb-module>
 </project-modules>
