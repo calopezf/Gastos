@@ -88,9 +88,6 @@
     <auth-constraint>
       <description></description>
       <role-name>ADMINISTRADOR</role-name>
-      <role-name>DOCTOR</role-name>
-      <role-name>PACIENTE</role-name>
-      <role-name>ASISTENTE</role-name>
     </auth-constraint>
     <user-data-constraint>
       <transport-guarantee>NONE</transport-guarantee>
@@ -107,18 +104,6 @@
   <security-role>
     <description></description>
     <role-name>ADMINISTRADOR</role-name>
-  </security-role>
-  <security-role>
-    <description></description>
-    <role-name>DOCTOR</role-name>
-  </security-role>
-  <security-role>
-    <description></description>
-    <role-name>PACIENTE</role-name>
-  </security-role>
-  <security-role>
-    <description></description>
-    <role-name>ASISTENTE</role-name>
   </security-role>
   <mime-mapping>
     <extension>ttf</extension>
