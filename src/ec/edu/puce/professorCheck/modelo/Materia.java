@@ -36,7 +36,7 @@ public class Materia implements Serializable {
 	@JoinColumn(name = "nivel", referencedColumnName = "codigo")
 	private Parametro nivel;
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "plan", referencedColumnName = "codigo")
+	@JoinColumn(name = "plane", referencedColumnName = "codigo")
 	private Parametro plan;
 	@Column(name = "estado")
 	@Enumerated(EnumType.STRING)
