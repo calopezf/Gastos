@@ -6,35 +6,40 @@
 
 	<ui:define name="content">
 		<h:form id="formParametros">
-			<h1>Maestro del Sistema </h1>
+			<h1>Maestro del Sistema</h1>
 			<p:growl id="growl" autoUpdate="true" />
 
 			<br />
 			<h:panelGrid id="datosGenerales" columns="2"
 				columnClasses="form-label,form-input">
 				<p:outputLabel value="#{etiquetas['codigo']}*:" />
-				<p:inputText id="codigoParametro" 
+				<p:inputText id="codigoParametro"
 					readonly="#{param.idParametro!=null}"
-					value="#{parametroMaestroSistemaCtrl.parametro.codigo}" required="true"
+					value="#{parametroMaestroSistemaCtrl.parametro.codigo}"
+					required="true"
 					requiredMessage="#{etiquetas['codigo']} #{mensajes['requerido.masculino']}">
-				</p:inputText>
-				<p:outputLabel value="#{etiquetas['valor']}*:" />
-				<p:inputText id="nombreParametro" maxlength="200" style="width:320px"
-					value="#{parametroMaestroSistemaCtrl.parametro.nombre}" required="true"
-					requiredMessage="#{etiquetas['nombre']} #{mensajes['requerido.masculino']}">
 				</p:inputText>
 				<p:outputLabel value="#{etiquetas['tipo']}*:" />
 				<p:selectOneMenu id="tipoParam"
 					value="#{parametroMaestroSistemaCtrl.parametro.tipo}">
 					<f:selectItems value="#{selectItemCtrl.tipoParametroEnumItems}" />
 				</p:selectOneMenu>
+				<p:outputLabel value="#{etiquetas['valor']}*:" />
+				<p:inputText id="nombreParametro" maxlength="200"
+					style="width:320px"
+					value="#{parametroMaestroSistemaCtrl.parametro.nombre}"
+					required="true"
+					requiredMessage="#{etiquetas['nombre']} #{mensajes['requerido.masculino']}">
+				</p:inputText>
+
 				<p:outputLabel value="#{etiquetas['descripcion']}:" />
 				<p:inputTextarea id="descripcionParametro" cols="44"
 					value="#{parametroMaestroSistemaCtrl.parametro.descripcion}">
 					<f:validateLength maximum="150" />
 				</p:inputTextarea>
 				<p:outputLabel value="#{etiquetas['estado']}*:" />
-				<p:selectOneMenu value="#{parametroMaestroSistemaCtrl.parametro.estado}">
+				<p:selectOneMenu
+					value="#{parametroMaestroSistemaCtrl.parametro.estado}">
 					<f:selectItems value="#{selectItemCtrl.estadoEnum}" />
 				</p:selectOneMenu>
 			</h:panelGrid>
@@ -46,12 +51,12 @@
 
 			<div align="center">
 				<p:commandButton value="#{etiquetas.guardar}"
-					action="#{parametroMaestroSistemaCtrl.guardar}" title="#{etiquetas['guardar']}"
-					update="growl">
+					action="#{parametroMaestroSistemaCtrl.guardar}"
+					title="#{etiquetas['guardar']}" update="growl">
 				</p:commandButton>
-				<p:commandButton value="#{etiquetas.atras}" 
-					action="/paginas/parametrosMaestroSistema/parametroLista?faces-redirect=true" title="#{etiquetas['atras']}"
-					immediate="true">
+				<p:commandButton value="#{etiquetas.atras}"
+					action="/paginas/parametrosMaestroSistema/parametroLista?faces-redirect=true"
+					title="#{etiquetas['atras']}" immediate="true">
 				</p:commandButton>
 			</div>
 
