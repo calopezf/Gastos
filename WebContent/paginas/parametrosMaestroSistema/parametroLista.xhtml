@@ -13,8 +13,8 @@
 					<p:outputLabel value="#{etiquetas['codigo']}" />
 					<p:inputText value="#{parametroMaestroSistemaCtrl.parametroFiltro.codigo}"
 						style="width:120px" />
-					<p:outputLabel value="#{etiquetas['nombre']}" />
-					<p:inputText value="#{parametroMaestroSistemaCtrl.parametroFiltro.nombre}"
+					<p:outputLabel value="#{etiquetas['descripcion']}" />
+					<p:inputText value="#{parametroMaestroSistemaCtrl.parametroFiltro.descripcion}"
 						style="width:120px" />
 				</h:panelGrid>
 				<h:panelGrid columns="2">
@@ -40,15 +40,15 @@
 					<p:column headerText="#{etiquetas['codigo']}" style="width:150px;">
 						<h:outputText value="#{item.codigo}" />
 					</p:column>
-					<p:column headerText="#{etiquetas['nombre']}" style="width:150px;">
+					<p:column headerText="#{etiquetas['tipo']}" style="width:150px;">
+						<h:outputText value="#{item.tipo}" />
+					</p:column>
+					<p:column headerText="#{etiquetas['valor']}" style="width:150px;">
 						<h:outputText value="#{item.nombre}" />
 					</p:column>
 					<p:column headerText="#{etiquetas['descripcion']}"
 						style="width:150px;">
 						<h:outputText value="#{item.descripcion}" />
-					</p:column>
-					<p:column headerText="#{etiquetas['tipo']}" style="width:150px;">
-						<h:outputText value="#{item.tipo}" />
 					</p:column>
 					<p:column headerText="#{etiquetas['estado']}" style="width:150px;">
 						<h:outputText value="#{etiquetas[item.estado.etiqueta]}" />

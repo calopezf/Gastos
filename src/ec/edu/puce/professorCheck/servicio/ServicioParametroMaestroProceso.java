@@ -18,5 +18,4 @@ public class ServicioParametroMaestroProceso {
 @EJB
 private ServicioCrud servicioCrud;
     
-
 }
