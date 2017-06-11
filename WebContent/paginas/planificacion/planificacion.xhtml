@@ -1,0 +1,68 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/WEB-INF/template.xhtml" xmlns:p="http://primefaces.org/ui">
+
+	<br />
+
+	<ui:define name="content">
+		<h:form id="formUsuario">
+			<h1>Planificación</h1>
+			<p:growl id="growl" autoUpdate="true" />
+			<h:panelGrid columns="2" columnClasses="form-label,form-input">
+
+				<p:outputLabel value="#{etiquetas['nombre']}*:" />
+				<p:inputText id="nombre"
+					value="#{planificacionCtrl.planificacion.nombre}" required="true"
+					requiredMessage="#{etiquetas['nombre']} #{mensajes['requerido.masculino']}"
+					maxlength="200" size="50" />
+
+				<p:outputLabel value="#{etiquetas['fecha']}:*" />
+				<p:calendar id="fecha"
+					value="#{planificacionCtrl.planificacion.fechaCreacion}"
+					disabled="true" style="width:250px" />
+
+				<p:outputLabel value="#{etiquetas['concepto']}*:" />
+				<p:inputText id="creditos"
+					value="#{planificacionCtrl.planificacion.concepto}" required="true"
+					requiredMessage="#{etiquetas['concepto']} #{mensajes['requerido.masculino']}" />
+
+				<p:outputLabel value="#{etiquetas['empleado']}*:" />
+				<p:selectOneMenu id="nivel" required="true"
+					requiredMessage="#{etiquetas['empleado']} #{mensajes['requerido.masculino']}"
+					value="#{planificacionCtrl.planificacion.codigoSocio}" style="width:250px">
+					<f:selectItems value="#{planificacionCtrl.socioNegocioLista}" var="item"
+						itemLabel="#{item.razonSocial}" itemValue="#{item.codigo}" />
+				</p:selectOneMenu>
+
+			</h:panelGrid>
+			<br />
+			<br />
+			<h:outputText value="#{etiquetas['campos.obligatorios']}" />
+
+			<br />
+			<br />
+
+			<div align="center">
+				<p:commandButton value="#{etiquetas.guardar}"
+					action="#{planificacionCtrl.guardar}" title="#{etiquetas['guardar']}"
+					update="growl">
+				</p:commandButton>
+				<p:commandButton value="#{etiquetas.atras}"
+					action="/paginas/planificacion/planificacionLista?faces-redirect=true"
+					title="#{etiquetas['atras']}" immediate="true">
+				</p:commandButton>
+			</div>
+		</h:form>
+		<!--<p:ajaxStatus onstart="loadingDialog.show();" onsuccess="loadingDialog.hide();"/>  
+        <p:dialog modal="true" widgetVar="loadingDialog" header="..." draggable="false" closable="false" width="200" height="50" resizable="false">
+            <br/>
+            <div align="center">
+                <p:graphicImage value="/img/ajax-loader.gif" />  
+            </div>
+            <br/>
+        </p:dialog>-->
+	</ui:define>
+
+</ui:composition>

@@ -86,4 +86,28 @@ public class Planificacion implements Serializable {
 		this.estado = estado;
 	}
 
+	public Integer getCodigoSocio() {
+		return codigoSocio;
+	}
+
+	public void setCodigoSocio(Integer codigoSocio) {
+		this.codigoSocio = codigoSocio;
+	}
+
+	public Integer getCompaniaCodigo() {
+		return companiaCodigo;
+	}
+
+	public void setCompaniaCodigo(Integer companiaCodigo) {
+		this.companiaCodigo = companiaCodigo;
+	}
+
+	public String getFlagEmpleado() {
+		return flagEmpleado;
+	}
+
+	public void setFlagEmpleado(String flagEmpleado) {
+		this.flagEmpleado = flagEmpleado;
+	}
+
 }
