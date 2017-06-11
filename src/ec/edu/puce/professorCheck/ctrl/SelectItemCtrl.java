@@ -16,6 +16,7 @@ import ec.edu.puce.professorCheck.constantes.EnumEstadoCivil;
 import ec.edu.puce.professorCheck.constantes.EnumRol;
 import ec.edu.puce.professorCheck.constantes.EnumTipoContenido;
 import ec.edu.puce.professorCheck.constantes.EnumTipoParametro;
+import ec.edu.puce.professorCheck.constantes.EnumTipoParametroMaestroProceso;
 
 /**
  *
@@ -31,6 +32,7 @@ public class SelectItemCtrl extends BaseCtrl {
 	private List<SelectItem> rolEnum;
 	private List<SelectItem> estadoCivil;
 	private List<SelectItem> tipoParametroEnumItems;
+	private List<SelectItem> tipoParametroProcesoEnumItems;
 	private List<SelectItem> tipoContenidoEnumItems;
 
 	public List<SelectItem> getTipoContenidoEnumItems() {
@@ -62,6 +64,22 @@ public class SelectItemCtrl extends BaseCtrl {
 	public void setTipoParametroEnumItems(
 			List<SelectItem> tipoParametroEnumItems) {
 		this.tipoParametroEnumItems = tipoParametroEnumItems;
+	}
+	
+
+	public List<SelectItem> getTipoParametroProcesoEnumItems() {
+		if (tipoParametroProcesoEnumItems == null) {
+			tipoParametroProcesoEnumItems = new ArrayList<SelectItem>();
+			for (EnumTipoParametroMaestroProceso e : EnumTipoParametroMaestroProceso.values()) {
+				tipoParametroProcesoEnumItems.add(new SelectItem(e, e.toString()));
+			}
+		}
+		return tipoParametroProcesoEnumItems;
+	}
+
+	public void setTipoParametroProcesoEnumItems(
+			List<SelectItem> tipoParametroProcesoEnumItems) {
+		this.tipoParametroProcesoEnumItems = tipoParametroProcesoEnumItems;
 	}
 
 	public List<SelectItem> getEnumCarrera() {

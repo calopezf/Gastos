@@ -13,7 +13,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.event.AjaxBehaviorEvent;
 
 import ec.edu.puce.professorCheck.constantes.EnumEstado;
-import ec.edu.puce.professorCheck.constantes.EnumTipoParametro;
 import ec.edu.puce.professorCheck.crud.ServicioCrud;
 import ec.edu.puce.professorCheck.ctrl.BaseCtrl;
 import ec.edu.puce.professorCheck.modelo.Materia;
@@ -191,7 +190,7 @@ public class RegistroClaseCtrl extends BaseCtrl {
 
 	public String editar() {
 		RegistroClase registroData = (RegistroClase) getExternalContext()
-				.getRequestMap().get("item");
+				.getRequestMap().get("item");	
 		return "/paginas/registroClase/registroClase?faces-redirect=true&idRegistroClase="
 				+ registroData.getId();
 	}
@@ -226,7 +225,7 @@ public class RegistroClaseCtrl extends BaseCtrl {
 	public List<Parametro> getSemestreLista() {
 		if (semestreLista == null) {
 			Parametro semestreFiltro = new Parametro();
-			semestreFiltro.setTipo(EnumTipoParametro.SEMESTRE);
+			//semestreFiltro.setTipo(EnumTipoParametro.SEMESTRE);
 			if (this.registroClase != null
 					&& this.registroClase.getSemestre() != null) {
 				semestreFiltro.setCodigo(this.registroClase.getSemestre()
@@ -244,7 +243,7 @@ public class RegistroClaseCtrl extends BaseCtrl {
 	public List<Parametro> getCarreraLista() {
 		if (carreraLista == null) {
 			Parametro semestreFiltro = new Parametro();
-			semestreFiltro.setTipo(EnumTipoParametro.CARRERA);
+			//semestreFiltro.setTipo(EnumTipoParametro.CARRERA);
 			if (this.registroClase != null
 					&& this.registroClase.getCarrera() != null) {
 				semestreFiltro.setCodigo(this.registroClase.getCarrera()

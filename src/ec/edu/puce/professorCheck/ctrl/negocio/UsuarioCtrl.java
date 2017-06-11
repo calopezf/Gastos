@@ -25,8 +25,6 @@ import javax.faces.event.AjaxBehaviorEvent;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DualListModel;
 
-import ec.edu.puce.professorCheck.constantes.EnumEstado;
-import ec.edu.puce.professorCheck.constantes.EnumTipoParametro;
 import ec.edu.puce.professorCheck.crud.ServicioCrud;
 import ec.edu.puce.professorCheck.ctrl.BaseCtrl;
 import ec.edu.puce.professorCheck.modelo.Parametro;
@@ -417,9 +415,9 @@ public class UsuarioCtrl extends BaseCtrl {
 					if (!s.equals("ALUMNO") && contaProfe < 1) {
 						contaProfe++;
 						Parametro referenciaFiltro = new Parametro();
-						referenciaFiltro
-								.setTipo(EnumTipoParametro.OCUPACION_PROFESOR);
-						referenciaFiltro.setEstado(EnumEstado.ACT);
+//						referenciaFiltro
+//								.setTipo(EnumTipoParametro.OCUPACION_PROFESOR);
+//						referenciaFiltro.setEstado(EnumEstado.ACT);
 						for (Parametro a : servicioCrud
 								.findOrder(referenciaFiltro)) {
 							this.referenciaLista.add(a);
@@ -427,9 +425,9 @@ public class UsuarioCtrl extends BaseCtrl {
 					}
 					if (s.equals("ALUMNO")) {
 						Parametro referenciaFiltro = new Parametro();
-						referenciaFiltro
-								.setTipo(EnumTipoParametro.NIVEL_ALUMNO);
-						referenciaFiltro.setEstado(EnumEstado.ACT);
+//						referenciaFiltro
+//								.setTipo(EnumTipoParametro.NIVEL_ALUMNO);
+//						referenciaFiltro.setEstado(EnumEstado.ACT);
 						for (Parametro a : servicioCrud
 								.findOrder(referenciaFiltro)) {
 							this.referenciaLista.add(a);

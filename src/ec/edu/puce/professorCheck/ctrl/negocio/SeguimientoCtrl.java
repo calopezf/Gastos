@@ -8,10 +8,8 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.AjaxBehaviorEvent;
-import javax.xml.soap.Detail;
 
 import ec.edu.puce.professorCheck.constantes.EnumEstado;
-import ec.edu.puce.professorCheck.constantes.EnumTipoParametro;
 import ec.edu.puce.professorCheck.crud.ServicioCrud;
 import ec.edu.puce.professorCheck.ctrl.BaseCtrl;
 import ec.edu.puce.professorCheck.modelo.Materia;
@@ -19,7 +17,6 @@ import ec.edu.puce.professorCheck.modelo.Parametro;
 import ec.edu.puce.professorCheck.modelo.Rol;
 import ec.edu.puce.professorCheck.modelo.SeguimientoSyllabus;
 import ec.edu.puce.professorCheck.modelo.SeguimientoSyllabusDetalle;
-import ec.edu.puce.professorCheck.modelo.Semestre;
 import ec.edu.puce.professorCheck.modelo.Syllabus;
 import ec.edu.puce.professorCheck.modelo.SyllabusDetalle;
 import ec.edu.puce.professorCheck.modelo.Usuario;
@@ -30,7 +27,7 @@ public class SeguimientoCtrl extends BaseCtrl {
 
 	/**
 	 * 	
-	 */
+	 */	
 	private static final long serialVersionUID = 1L;
 	// TODO serializable de la clase: Usuario
 	@EJB
@@ -263,7 +260,7 @@ public class SeguimientoCtrl extends BaseCtrl {
 	public List<Parametro> getSemestreLista() {
 		if (semestreLista == null) {
 			Parametro semestreFiltro = new Parametro();
-			semestreFiltro.setTipo(EnumTipoParametro.SEMESTRE);
+			//semestreFiltro.setTipo(EnumTipoParametro.SEMESTRE);
 			if (this.seguimientoFiltro != null
 					&& this.seguimientoFiltro.getSemestre() != null) {
 				semestreFiltro.setCodigo(this.seguimientoFiltro.getSemestre()
@@ -286,7 +283,7 @@ public class SeguimientoCtrl extends BaseCtrl {
 	public List<Parametro> getCarreraLista() {
 		if (carreraLista == null) {
 			Parametro semestreFiltro = new Parametro();
-			semestreFiltro.setTipo(EnumTipoParametro.CARRERA);
+		//	semestreFiltro.setTipo(EnumTipoParametro.CARRERA);
 			if (this.seguimientoFiltro != null
 					&& this.seguimientoFiltro.getCarrera() != null) {
 				semestreFiltro.setCodigo(this.seguimientoFiltro.getCarrera()

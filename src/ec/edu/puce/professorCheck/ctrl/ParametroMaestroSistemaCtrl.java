@@ -15,7 +15,7 @@ import ec.edu.puce.professorCheck.servicio.ServicioUsuario;
 
 @ManagedBean(name = "parametroMaestroSistemaCtrl")
 @ViewScoped
-public class ParametroMaestroSistemaCtl extends BaseCtrl {
+public class ParametroMaestroSistemaCtrl extends BaseCtrl {
 
 	/**
 	 * 	
@@ -90,13 +90,13 @@ public class ParametroMaestroSistemaCtl extends BaseCtrl {
 			return null;
 		}
 
-		return "/paginas/parametros/parametroLista";
+		return "/paginas/parametrosMaestroSistema/parametroLista";
 	}
 
 	public String editar() {
 		ParametroMaestroSistema parametroData = (ParametroMaestroSistema) getExternalContext()
 				.getRequestMap().get("item");
-		return "/paginas/parametros/parametro?faces-redirect=true&idParametro="
+		return "/paginas/parametrosMaestroSistema/parametro?faces-redirect=true&idParametro="
 				+ parametroData.getCodigo();
 	}
 

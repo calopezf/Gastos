@@ -5,24 +5,24 @@
 	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
 	<ui:define name="content">
 		<h:form id="formParametroLista">
-			<h1>Maestros del Sistema</h1>
+			<h1>Maestros del Proceso</h1>
 			<p:growl id="msg" autoUpdate="true" />
 			<h:panelGrid columns="1">
 				<h:panelGrid id="gridFiltros" columns="2"
 					columnClasses="form-label,form-input">
 					<p:outputLabel value="#{etiquetas['codigo']}" />
-					<p:inputText value="#{parametroMaestroSistemaCtrl.parametroFiltro.codigo}"
+					<p:inputText value="#{parametroMaestroProcesoCtrl.parametroFiltro.codigo}"
 						style="width:120px" />
 					<p:outputLabel value="#{etiquetas['nombre']}" />
-					<p:inputText value="#{parametroMaestroSistemaCtrl.parametroFiltro.nombre}"
+					<p:inputText value="#{parametroMaestroProcesoCtrl.parametroFiltro.nombre}"
 						style="width:120px" />
 				</h:panelGrid>
 				<h:panelGrid columns="2">
 					<p:commandButton value="Nuevo Registro"
-						action="/paginas/parametrosMaestroSistema/parametro?faces-redirect=true"
+						action="/paginas/parametrosMaestroProceso/parametro?faces-redirect=true"
 						title="#{etiquetas['crear.nuevo']}" immediate="true">
 					</p:commandButton>
-					<p:commandButton value="Buscar" action="#{parametroMaestroSistemaCtrl.buscar}"
+					<p:commandButton value="Buscar" action="#{parametroMaestroProcesoCtrl.buscar}"
 						title="#{etiquetas.buscar}">
 						<p:ajax update="itemsPanel" process="gridFiltros" />
 					</p:commandButton>
@@ -34,7 +34,7 @@
 
 				<p:dataTable id="itemsTable"
 					emptyMessage="#{etiquetas['no.existen.registros']}"
-					value="#{parametroMaestroSistemaCtrl.parametros}" var="item" style="width:100%"
+					value="#{parametroMaestroProcesoCtrl.parametros}" var="item" style="width:100%"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
 					paginator="true" rows="10">
 					<p:column headerText="#{etiquetas['codigo']}" style="width:150px;">
@@ -55,7 +55,7 @@
 					</p:column>
 					<p:column headerText="#{etiquetas['editar']}" style="width:70px;"
 						styleClass="columnaCentrada">
-						<h:commandLink action="#{parametroMaestroSistemaCtrl.editar}"
+						<h:commandLink action="#{parametroMaestroProcesoCtrl.editar}"
 							title="#{etiquetas.editar}">
 							<h:graphicImage value="/img/edit.png" id="editImage"
 								style="width:20px; height:20px" />
@@ -63,7 +63,7 @@
 					</p:column>
 					<p:column style="width:70px;" styleClass="columnaCentrada"
 						headerText="#{etiquetas['eliminar.sistema']}">
-						<h:commandLink actionListener="#{parametroMaestroSistemaCtrl.eliminarParametro}"
+						<h:commandLink actionListener="#{parametroMaestroProcesoCtrl.eliminarParametro}"
 							title="#{etiquetas['eliminar.sistema']}"
 							onclick="if(!confirm('#{mensajes['esta.seguro']}'))return false;">
 							<h:graphicImage value="/img/delete.png" id="trashImage"

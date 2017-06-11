@@ -14,8 +14,7 @@ import java.util.List;
 public enum EnumTipoParametro {
 
 	
-	SISTEMA__URL_ENT, SISTEMA_URL_SAL, BDD_URL,BDD_USR, BDD_PSS, BDD_NOM, MAIL, URL_DOCUMENTOS, 
-	PLAN_ESTUDIOS, SEMESTRE, OCUPACION_PROFESOR, NIVEL_ALUMNO, AREA_MATERIA, CARRERA;
+	SISTEMA__URL_ENT, SISTEMA_URL_SAL, BDD_URL,BDD_USR, BDD_PSS, BDD_NOM, MAIL, URL_DOCUMENTOS;
 
 	public static List<EnumTipoParametro> getTipoParametroEnumList() {
 		return Arrays.asList(EnumTipoParametro.values());

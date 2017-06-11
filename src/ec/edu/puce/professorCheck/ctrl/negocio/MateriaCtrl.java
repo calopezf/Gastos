@@ -8,12 +8,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import ec.edu.puce.professorCheck.constantes.EnumEstado;
-import ec.edu.puce.professorCheck.constantes.EnumTipoParametro;
 import ec.edu.puce.professorCheck.crud.ServicioCrud;
 import ec.edu.puce.professorCheck.ctrl.BaseCtrl;
 import ec.edu.puce.professorCheck.modelo.Materia;
 import ec.edu.puce.professorCheck.modelo.Parametro;
-import ec.edu.puce.professorCheck.modelo.Usuario;
 import ec.edu.puce.professorCheck.servicio.ServicioRol;
 import ec.edu.puce.professorCheck.servicio.ServicioUsuario;
 
@@ -24,7 +22,7 @@ public class MateriaCtrl extends BaseCtrl {
 	/**
 	 * 	
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;	
 	// TODO serializable de la clase: Usuario
 	@EJB
 	private ServicioUsuario usuarioServicio;
@@ -149,7 +147,7 @@ public class MateriaCtrl extends BaseCtrl {
 	public List<Parametro> getPlanLista() {
 		if (this.planLista == null) {
 			Parametro planFiltro = new Parametro();
-			planFiltro.setTipo(EnumTipoParametro.PLAN_ESTUDIOS);
+		//	planFiltro.setTipo(EnumTipoParametro.PLAN_ESTUDIOS);
 			planFiltro.setEstado(EnumEstado.ACT);
 			this.planLista = servicioCrud.findOrder(planFiltro);
 		}
@@ -163,7 +161,7 @@ public class MateriaCtrl extends BaseCtrl {
 	public List<Parametro> getCarreraLista() {
 		if (this.carreraLista == null) {
 			Parametro carreraFiltro = new Parametro();
-			carreraFiltro.setTipo(EnumTipoParametro.CARRERA);
+			//carreraFiltro.setTipo(EnumTipoParametro.CARRERA);
 			carreraFiltro.setEstado(EnumEstado.ACT);
 			this.carreraLista = servicioCrud.findOrder(carreraFiltro);
 		}
@@ -177,7 +175,7 @@ public class MateriaCtrl extends BaseCtrl {
 	public List<Parametro> getAreaLista() {
 		if (this.areaLista == null) {
 			Parametro areaFiltro = new Parametro();
-			areaFiltro.setTipo(EnumTipoParametro.AREA_MATERIA);
+			//areaFiltro.setTipo(EnumTipoParametro.AREA_MATERIA);
 			areaFiltro.setEstado(EnumEstado.ACT);
 			this.areaLista = servicioCrud.findOrder(areaFiltro);
 		}
@@ -191,7 +189,7 @@ public class MateriaCtrl extends BaseCtrl {
 	public List<Parametro> getNivelLista() {
 		if (this.nivelLista == null) {
 			Parametro nivelFiltro = new Parametro();
-			nivelFiltro.setTipo(EnumTipoParametro.NIVEL_ALUMNO);
+		//	nivelFiltro.setTipo(EnumTipoParametro.NIVEL_ALUMNO);
 			nivelFiltro.setEstado(EnumEstado.ACT);
 			this.nivelLista = servicioCrud.findOrder(nivelFiltro);
 		}

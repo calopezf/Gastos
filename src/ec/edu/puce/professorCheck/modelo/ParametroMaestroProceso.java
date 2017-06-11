@@ -7,11 +7,14 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import ec.edu.puce.professorCheck.constantes.EnumEstado;
 import ec.edu.puce.professorCheck.constantes.EnumTipoParametro;
+import ec.edu.puce.professorCheck.constantes.EnumTipoParametroMaestroProceso;
 
 @Entity
 @Table(name = "WcMPr")
@@ -31,7 +34,7 @@ public class ParametroMaestroProceso implements Serializable {
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "WcMPrTip", nullable = false)
-	private EnumTipoParametro tipo;
+	private EnumTipoParametroMaestroProceso tipo;
 
 	@Column(name = "WcMPrDes", nullable = false)
 	private String descripcion;
@@ -40,9 +43,8 @@ public class ParametroMaestroProceso implements Serializable {
 	@Column(name = "WcMPrEst", nullable = false)
 	private EnumEstado estado;
 
-	@Column(name = "WcMPrCodP", nullable = false)
+	@Column(name = "WcMPrCodP", nullable = true)
 	private String codigo_padre;
-	
 	@Transient
 	private boolean registroNuevo;
 
@@ -54,11 +56,11 @@ public class ParametroMaestroProceso implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public EnumTipoParametro getTipo() {
+	public EnumTipoParametroMaestroProceso getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(EnumTipoParametro tipo) {
+	public void setTipo(EnumTipoParametroMaestroProceso tipo) {
 		this.tipo = tipo;
 	}
 
