@@ -14,7 +14,7 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "ESTUDIANTE")
 @TableGenerator(table = "SECUENCIAS", name = "GEN_ESTUDIANTE", pkColumnName = "NOMBRE", pkColumnValue = "ESTUDIANTE", valueColumnName = "VALOR", allocationSize = 1)
-public class Estudiante implements Serializable {
+public class Empleado implements Serializable {
 
 	/**
 	 * 
