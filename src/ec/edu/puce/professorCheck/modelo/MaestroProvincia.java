@@ -12,10 +12,10 @@ import javax.persistence.Table;
 public class MaestroProvincia implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	@Id	
+
 	@Column(name = "AmPaisCod")
 	private String codigoPais;
-
+	@Id
 	@Column(name = "AdPrvCod")
 	private String codigoProvincia;
 

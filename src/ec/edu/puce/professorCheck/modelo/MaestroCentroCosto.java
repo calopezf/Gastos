@@ -8,53 +8,41 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "AdCiu")
+@Table(name = "CmCcs")
 public class MaestroCentroCosto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	@Id
-	@Column(name = "AmPaisCod")
-	private String codigoPais;
+	@Column(name = "AmComCod")
+	private String codigoCompania;
+	@Id	
+	@Column(name = "CmCCsCod")
+	private String codigoCentroCostos;
 
-	@Column(name = "AdPrvCod")
-	private String codigoProvincia;
+	@Column(name = "CmCCsNom")
+	private String NombreCentroCostos;
 
-	@Column(name = "AdCiuCod")
-	private String codigoCiudad;
-
-	@Column(name = "AdCiuNom")
-	private String nombreCiudad;
-
-	public String getCodigoPais() {
-		return codigoPais;
+	public String getCodigoCompania() {
+		return codigoCompania;
 	}
 
-	public void setCodigoPais(String codigoPais) {
-		this.codigoPais = codigoPais;
+	public void setCodigoCompania(String codigoCompania) {
+		this.codigoCompania = codigoCompania;
 	}
 
-	public String getCodigoProvincia() {
-		return codigoProvincia;
+	public String getCodigoCentroCostos() {
+		return codigoCentroCostos;
 	}
 
-	public void setCodigoProvincia(String codigoProvincia) {
-		this.codigoProvincia = codigoProvincia;
+	public void setCodigoCentroCostos(String codigoCentroCostos) {
+		this.codigoCentroCostos = codigoCentroCostos;
 	}
 
-	public String getCodigoCiudad() {
-		return codigoCiudad;
+	public String getNombreCentroCostos() {
+		return NombreCentroCostos;
 	}
 
-	public void setCodigoCiudad(String codigoCiudad) {
-		this.codigoCiudad = codigoCiudad;
-	}
-
-	public String getNombreCiudad() {
-		return nombreCiudad;
-	}
-
-	public void setNombreCiudad(String nombreCiudad) {
-		this.nombreCiudad = nombreCiudad;
+	public void setNombreCentroCostos(String nombreCentroCostos) {
+		NombreCentroCostos = nombreCentroCostos;
 	}
 
 }

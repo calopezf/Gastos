@@ -1,11 +1,17 @@
 package ec.edu.puce.professorCheck.ctrl.negocio;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+
+import org.primefaces.event.SelectEvent;
 
 import ec.edu.puce.professorCheck.constantes.EnumEstado;
 import ec.edu.puce.professorCheck.crud.ServicioCrud;
@@ -14,7 +20,6 @@ import ec.edu.puce.professorCheck.modelo.MaestroCentroCosto;
 import ec.edu.puce.professorCheck.modelo.MaestroCiudad;
 import ec.edu.puce.professorCheck.modelo.MaestroPais;
 import ec.edu.puce.professorCheck.modelo.MaestroProvincia;
-import ec.edu.puce.professorCheck.modelo.Materia;
 import ec.edu.puce.professorCheck.modelo.Planificacion;
 import ec.edu.puce.professorCheck.modelo.SocioNegocio;
 import ec.edu.puce.professorCheck.servicio.ServicioRol;
@@ -40,12 +45,19 @@ public class PlanificacionCtrl extends BaseCtrl {
 	private List<Planificacion> planificacionLista;
 	private List<SocioNegocio> socioNegocioLista;
 	private List<MaestroCentroCosto> maestroCentroCostoLista;
+	private List<MaestroCentroCosto> maestroCentroCostoListaSeleccionada;
 	private List<MaestroPais> paisLista;
 	private List<MaestroProvincia> provinciaLista;
 	private List<MaestroCiudad> ciudadLista;
+	private List<MaestroCiudad> ciudadListaSeleccionada;
+	private SocioNegocio socioNegocio;
+	private String pais;
+	private String provincia;
+	private String ciudad;
 
 	@PostConstruct
 	public void postConstructor() {
+		this.pais = "169";
 		this.planificacionFiltro = new Planificacion();
 	}
 
@@ -62,7 +74,6 @@ public class PlanificacionCtrl extends BaseCtrl {
 		}
 		return planificacion;
 	}
-	
 
 	public void setPlanificacion(Planificacion planificacion) {
 		this.planificacion = planificacion;
@@ -100,7 +111,7 @@ public class PlanificacionCtrl extends BaseCtrl {
 		}
 		return planificacionLista;
 	}
-	
+
 	public void eliminarPlanificacion() {
 		try {
 			Planificacion planificacionData = (Planificacion) getExternalContext()
@@ -130,6 +141,15 @@ public class PlanificacionCtrl extends BaseCtrl {
 				+ planificacionData.getId();
 	}
 
+	public void nuevoEmpleado() {
+		this.socioNegocio = new SocioNegocio();
+	}
+
+	public void seleccionarEmpleado() {
+		this.socioNegocio = (SocioNegocio) getExternalContext().getRequestMap()
+				.get("item");
+	}
+
 	public List<SocioNegocio> getSocioNegocioLista() {
 		if (this.socioNegocioLista == null) {
 			SocioNegocio filtro = new SocioNegocio();
@@ -155,6 +175,64 @@ public class PlanificacionCtrl extends BaseCtrl {
 		this.maestroCentroCostoLista = maestroCentroCostoLista;
 	}
 
+	public List<MaestroCiudad> getCiudadListaSeleccionada() {
+		if (this.ciudadListaSeleccionada == null) {
+			ciudadListaSeleccionada = new ArrayList<MaestroCiudad>();
+		}
+		return ciudadListaSeleccionada;
+	}
+
+	public void setCiudadListaSeleccionada(
+			List<MaestroCiudad> ciudadListaSeleccionada) {
+
+		this.ciudadListaSeleccionada = ciudadListaSeleccionada;
+	}
+
+	public void agregarCiudad() {
+		MaestroCiudad filtro = new MaestroCiudad();
+		if (pais != null && !pais.isEmpty() && provincia != null
+				&& !provincia.isEmpty() && ciudad != null && !ciudad.isEmpty()) {
+			filtro.setCodigoPais(pais);
+			filtro.setCodigoProvincia(provincia);
+			filtro.setCodigoCiudad(ciudad);
+			ciudadLista = this.servicioCrud.findOrder(filtro);
+			if (ciudadLista != null && !ciudadLista.isEmpty()) {
+				this.ciudadListaSeleccionada.add(ciudadLista.get(0));
+			}
+		}
+		addInfoMessage("Ciudad Agregada con éxito", "");
+		this.provincia = null;
+		this.ciudad = null;
+	}
+
+	public void eliminarCiudad() {
+		try {
+			MaestroCiudad ciudadData = (MaestroCiudad) getExternalContext()
+					.getRequestMap().get("item");
+			ciudadListaSeleccionada.remove(ciudadData);
+
+			addInfoMessage(
+					getBundleMensajes("mensaje.informacion.elimina.exito", null),
+					"");
+		} catch (Exception e) {
+			addErrorMessage(null, e.getMessage(), "");
+		}
+	}
+
+	public void eliminarCentroCostos() {
+		try {
+			MaestroCentroCosto maestroCentroData = (MaestroCentroCosto) getExternalContext()
+					.getRequestMap().get("item");
+			maestroCentroCostoListaSeleccionada.remove(maestroCentroData);
+
+			addInfoMessage(
+					getBundleMensajes("mensaje.informacion.elimina.exito", null),
+					"");
+		} catch (Exception e) {
+			addErrorMessage(null, e.getMessage(), "");
+		}
+	}
+
 	public List<MaestroPais> getPaisLista() {
 		if (this.paisLista == null) {
 			MaestroPais filtro = new MaestroPais();
@@ -167,7 +245,20 @@ public class PlanificacionCtrl extends BaseCtrl {
 		this.paisLista = paisLista;
 	}
 
+	public void cambiaPais() {
+		this.provinciaLista = null;
+		this.ciudadLista = null;
+	}
+
 	public List<MaestroProvincia> getProvinciaLista() {
+		if (this.provinciaLista == null) {
+			MaestroProvincia filtro = new MaestroProvincia();
+			if (pais != null && !pais.isEmpty()) {
+				filtro.setCodigoPais(pais);
+				provinciaLista = this.servicioCrud.findOrder(filtro);
+			}
+
+		}
 		return provinciaLista;
 	}
 
@@ -176,7 +267,48 @@ public class PlanificacionCtrl extends BaseCtrl {
 	}
 
 	public List<MaestroCiudad> getCiudadLista() {
+		if (this.ciudadLista == null) {
+			MaestroCiudad filtro = new MaestroCiudad();
+			if (pais != null && !pais.isEmpty() && provincia != null
+					&& !provincia.isEmpty()) {
+				filtro.setCodigoPais(pais);
+				filtro.setCodigoProvincia(provincia);
+				ciudadLista = this.servicioCrud.findOrder(filtro);
+			}
+
+		}
 		return ciudadLista;
+	}
+
+	public void cambiaProvincia() {
+		this.ciudadLista = null;
+	}
+
+	public List<MaestroCentroCosto> getMaestroCentroCostoListaSeleccionada() {
+		if (maestroCentroCostoListaSeleccionada == null) {
+			maestroCentroCostoListaSeleccionada = new ArrayList<MaestroCentroCosto>();
+		}
+		return maestroCentroCostoListaSeleccionada;
+	}
+
+	public void setMaestroCentroCostoListaSeleccionada(
+			List<MaestroCentroCosto> maestroCentroCostoListaSeleccionada) {
+		this.maestroCentroCostoListaSeleccionada = maestroCentroCostoListaSeleccionada;
+	}
+
+	public void agregarCentroCostos() {
+		try {
+			MaestroCentroCosto maestroCentroCostosData = (MaestroCentroCosto) getExternalContext()
+					.getRequestMap().get("item");
+			maestroCentroCostoListaSeleccionada.add(maestroCentroCostosData);
+
+			addInfoMessage("Centro de Costos agregado con éxito", "");
+		} catch (Exception e) {
+			addErrorMessage(null, e.getMessage(), "");
+		}
+	}
+
+	public void onDateSelect(SelectEvent event) {
 	}
 
 	public void setCiudadLista(List<MaestroCiudad> ciudadLista) {
@@ -190,4 +322,37 @@ public class PlanificacionCtrl extends BaseCtrl {
 	public void setPlanificacionFiltro(Planificacion planificacionFiltro) {
 		this.planificacionFiltro = planificacionFiltro;
 	}
+
+	public SocioNegocio getSocioNegocio() {
+		return socioNegocio;
+	}
+
+	public void setSocioNegocio(SocioNegocio socioNegocio) {
+		this.socioNegocio = socioNegocio;
+	}
+
+	public String getPais() {
+		return pais;
+	}
+
+	public void setPais(String pais) {
+		this.pais = pais;
+	}
+
+	public String getProvincia() {
+		return provincia;
+	}
+
+	public void setProvincia(String provincia) {
+		this.provincia = provincia;
+	}
+
+	public String getCiudad() {
+		return ciudad;
+	}
+
+	public void setCiudad(String ciudad) {
+		this.ciudad = ciudad;
+	}
+
 }
