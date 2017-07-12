@@ -39,7 +39,7 @@
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
 					paginator="true" rows="10" >
 					<p:column headerText="#{etiquetas['codigo']}" style="width:100px;">
-						<h:outputText value="#{item.id}" />
+						<h:outputText value="G0#{item.id}" />
 					</p:column>
 					<p:column headerText="#{etiquetas['nombre']}" style="width:150px;">
 						<h:outputText value="#{item.nombre}" />
@@ -50,10 +50,6 @@
 					<p:column headerText="#{etiquetas['fecha']}" style="width:150px;">
 						<h:outputText value="#{item.fechaCreacion}" />
 					</p:column>
-					<p:column headerText="#{etiquetas['estado']}" style="width:100px;">
-						<h:outputText value="#{etiquetas[item.estado.etiqueta]}" />
-					</p:column>
-				
 					<p:column headerText="Ingresar Gastos" style="width:70px;" styleClass="columnaCentrada">
 						<h:commandLink action="#{planificacionCtrl.editar}"
 							title="#{etiquetas.editar}">

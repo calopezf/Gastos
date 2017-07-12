@@ -87,6 +87,13 @@ public class PlanificacionCtrl extends BaseCtrl {
 							.findOrder(planificacionMarcaFiltro);
 					ru.setMarcas(marcasLista);
 				}
+				
+				SocioNegocio socioFiltro=new SocioNegocio();
+				socioFiltro.setCodigo(planificacion.getCodigoSocio());
+				List<SocioNegocio>socios=servicioCrud.findOrder(socioFiltro);
+				if(socios!=null && !socios.isEmpty()){
+					socioNegocio=socios.get(0);
+				}
 			}
 		}
 		return planificacion;
@@ -100,6 +107,7 @@ public class PlanificacionCtrl extends BaseCtrl {
 
 		try {
 			if (this.planificacion.getId() == null) {
+				this.planificacion.setCodigoSocio(this.socioNegocio.getCodigo());
 				List<PlanificacionRuta> rutasPersist = planificacion.getRutas();
 				planificacion.setRutas(null);
 				this.planificacion = servicioCrud.insertReturn(planificacion);
@@ -118,6 +126,7 @@ public class PlanificacionCtrl extends BaseCtrl {
 					}
 				}
 			} else {
+				this.planificacion.setCodigoSocio(this.socioNegocio.getCodigo());
 				List<PlanificacionRuta> rutasPersist = planificacion.getRutas();
 				planificacion.setRutas(null);
 				this.planificacion = servicioCrud.update(planificacion);

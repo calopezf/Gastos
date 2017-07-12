@@ -13,6 +13,7 @@ import ec.edu.puce.professorCheck.constantes.EnumEstado;
 import ec.edu.puce.professorCheck.crud.ServicioCrud;
 import ec.edu.puce.professorCheck.ctrl.BaseCtrl;
 import ec.edu.puce.professorCheck.modelo.FondoFijo;
+import ec.edu.puce.professorCheck.modelo.SeguimientoSyllabus;
 import ec.edu.puce.professorCheck.modelo.SocioNegocio;
 import ec.edu.puce.professorCheck.servicio.ServicioRol;
 import ec.edu.puce.professorCheck.servicio.ServicioUsuario;
@@ -50,6 +51,15 @@ public class FondoFijoCtrl extends BaseCtrl {
 				fondoFijo = new FondoFijo();
 				fondoFijo.setEstado(EnumEstado.ACT);
 			} else {
+				fondoFijo = servicioCrud.findById(
+						Long.parseLong(fondoId),
+						FondoFijo.class);
+				SocioNegocio socioFiltro=new SocioNegocio();
+				socioFiltro.setCodigo(fondoFijo.getCodigoSocio());
+				List<SocioNegocio>socios=servicioCrud.findOrder(socioFiltro);
+				if(socios!=null && !socios.isEmpty()){
+					socioNegocio=socios.get(0);
+				}
 			}
 		}
 		return fondoFijo;
@@ -77,8 +87,10 @@ public class FondoFijoCtrl extends BaseCtrl {
 
 		try {
 			if (this.fondoFijo.getId() == null) {
+				this.fondoFijo.setCodigoSocio(this.socioNegocio.getCodigo());
 				servicioCrud.insert(fondoFijo);
 			} else {
+				this.fondoFijo.setCodigoSocio(this.socioNegocio.getCodigo());
 				servicioCrud.update(fondoFijo);
 			}
 			String m = getBundleMensajes("registro.guardado.correctamente",
