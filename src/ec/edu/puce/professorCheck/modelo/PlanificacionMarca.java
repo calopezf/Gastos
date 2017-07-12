@@ -35,14 +35,21 @@ public class PlanificacionMarca implements Serializable {
 	private Long id;
 	@Column(name = "WcPlaId")
 	private Long idPlanificacion;
+	@Column(name = "WdPlRId")
+	private Long idRuta;
 	@Column(name = "AmComCod")
 	private Integer codigoCompania;
 	@Column(name = "CmCCsCod", length = 200)
 	private String codigoCentroCostos;
+	@Column(name = "CmCCsNom")
+	private String nombreCentroCostos;
 	@Column(name = "WdPlMPor", nullable = false, length = 200)
-	private String porcentaje;
+	private Double porcentaje;
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "WcPlaId", referencedColumnName = "WcPlaId",insertable=false ,updatable=false)
+	@JoinColumn(name = "WdPlRId", referencedColumnName = "WdPlRId", insertable = false, updatable = false)
+	private PlanificacionRuta ruta;
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "WcPlaId", referencedColumnName = "WcPlaId", insertable = false, updatable = false)
 	private Planificacion planificacion;
 
 	public Long getId() {
@@ -77,12 +84,20 @@ public class PlanificacionMarca implements Serializable {
 		this.codigoCentroCostos = codigoCentroCostos;
 	}
 
-	public String getPorcentaje() {
+	public Double getPorcentaje() {
 		return porcentaje;
 	}
 
-	public void setPorcentaje(String porcentaje) {
+	public void setPorcentaje(Double porcentaje) {
 		this.porcentaje = porcentaje;
+	}
+
+	public PlanificacionRuta getRuta() {
+		return ruta;
+	}
+
+	public void setRuta(PlanificacionRuta ruta) {
+		this.ruta = ruta;
 	}
 
 	public Planificacion getPlanificacion() {
@@ -91,6 +106,22 @@ public class PlanificacionMarca implements Serializable {
 
 	public void setPlanificacion(Planificacion planificacion) {
 		this.planificacion = planificacion;
+	}
+
+	public String getNombreCentroCostos() {
+		return nombreCentroCostos;
+	}
+
+	public void setNombreCentroCostos(String nombreCentroCostos) {
+		this.nombreCentroCostos = nombreCentroCostos;
+	}
+
+	public Long getIdRuta() {
+		return idRuta;
+	}
+
+	public void setIdRuta(Long idRuta) {
+		this.idRuta = idRuta;
 	}
 
 }

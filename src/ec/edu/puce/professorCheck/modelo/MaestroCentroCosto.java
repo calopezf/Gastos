@@ -13,7 +13,7 @@ public class MaestroCentroCosto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Column(name = "AmComCod")
-	private String codigoCompania;
+	private Integer codigoCompania;
 	@Id	
 	@Column(name = "CmCCsCod")
 	private String codigoCentroCostos;
@@ -21,11 +21,11 @@ public class MaestroCentroCosto implements Serializable {
 	@Column(name = "CmCCsNom")
 	private String NombreCentroCostos;
 
-	public String getCodigoCompania() {
+	public Integer getCodigoCompania() {
 		return codigoCompania;
 	}
 
-	public void setCodigoCompania(String codigoCompania) {
+	public void setCodigoCompania(Integer codigoCompania) {
 		this.codigoCompania = codigoCompania;
 	}
 

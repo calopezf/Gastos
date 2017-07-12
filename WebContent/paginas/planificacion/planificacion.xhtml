@@ -55,39 +55,7 @@
 						</h:panelGrid>
 					</h:panelGroup>
 				</h:panelGrid>
-				<br/>
-			</p:fieldset>
-			<p:fieldset legend="Marcas / Centro de Costos"
-				style="margin-bottom:20px" toggleable="true">
-				<h:panelGrid columns="2">
-					<p:commandButton value="Agregar Marca" immediate="true"
-						onclick="PF('dlg2').show();"
-						title="Agrega un nuevo centro de Costos">
-					</p:commandButton>
-				</h:panelGrid>
 				<br />
-				<p:dataTable id="itemsTable2"
-					emptyMessage="#{etiquetas['no.existen.registros']}"
-					value="#{planificacionCtrl.maestroCentroCostoListaSeleccionada}"
-					var="item" style="width:100%"
-					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
-					paginator="true" rows="10">
-					<p:column headerText="#{etiquetas['codigo']}" style="width:150px;">
-						<h:outputText value="#{item.codigoCentroCostos}" />
-					</p:column>
-					<p:column headerText="Nombre" style="width:150px;">
-						<h:outputText value="#{item.nombreCentroCostos}" />
-					</p:column>
-					<p:column headerText="Eliminar" style="width:70px;"
-						styleClass="columnaCentrada">
-						<div align="center">
-							<p:commandButton value="Eliminar" immediate="true"
-								action="#{planificacionCtrl.eliminarCentroCostos}"
-								update="itemsTable2" title="Eliminar Centro de Costos">
-							</p:commandButton>
-						</div>
-					</p:column>
-				</p:dataTable>
 			</p:fieldset>
 			<p:fieldset legend="Ruta" style="margin-bottom:20px"
 				toggleable="true">
@@ -130,15 +98,45 @@
 				</h:panelGroup>
 				<p:dataTable id="itemsTable"
 					emptyMessage="#{etiquetas['no.existen.registros']}"
-					value="#{planificacionCtrl.ciudadListaSeleccionada}" var="item"
+					value="#{planificacionCtrl.planificacion.rutas}" var="item"
 					style="width:100%"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
 					paginator="true" rows="10">
-					<p:column headerText="#{etiquetas['codigo']}" style="width:150px;">
+					<p:column headerText="#{etiquetas['codigo']}" style="width:50px;">
 						<h:outputText value="#{item.codigoCiudad}" />
 					</p:column>
 					<p:column headerText="Nombre" style="width:150px;">
 						<h:outputText value="#{item.nombreCiudad}" />
+					</p:column>
+
+					<p:column headerText="Marca" style="width:250px;"
+						styleClass="columnaCentrada">
+						<p:commandLink value="Agregar Marca" immediate="true"
+							action="#{planificacionCtrl.previoAgregaMarca}"
+							onclick="PF('dlg2').show();"
+							title="Agrega un nuevo centro de Costos">
+						</p:commandLink>
+						<br />
+						<p:dataTable id="lista" rendered="#{item.marcas.size()>0}"
+							value="#{item.marcas}" var="item2" type="ordered">
+							<p:column headerText="Marca" style="width:50px;">
+								<h:outputText
+									value="#{item2.codigoCentroCostos} #{item2.nombreCentroCostos}" />
+							</p:column>
+							<p:column headerText="Porcentaje" style="width:30px;">
+							<div align="center"></div>
+								<h:inputText value="#{item2.porcentaje}" style="width:70px;" />
+							</p:column>
+
+							<p:column headerText="Porcentaje" style="width:50px;">
+								<p:commandLink value="Eliminar" immediate="true"
+									action="#{planificacionCtrl.eliminarCentroCostos}"
+									update="lista" title="Eliminar Centro de Costos">
+								</p:commandLink>
+							</p:column>
+
+
+						</p:dataTable>
 					</p:column>
 
 					<p:column headerText="Eliminar" style="width:70px;"
@@ -150,6 +148,7 @@
 							</p:commandButton>
 						</div>
 					</p:column>
+
 				</p:dataTable>
 			</p:fieldset>
 			<br />
@@ -239,7 +238,7 @@
 						styleClass="columnaCentrada">
 						<div align="center">
 							<p:commandButton value="Seleccionar"
-								onclick="PF('dlg2').close();"
+								onclick="PF('dlg2').close();" update=":formUsuario"
 								action="#{planificacionCtrl.agregarCentroCostos}"
 								title="Seleccionar">
 							</p:commandButton>

@@ -1,15 +1,12 @@
 package ec.edu.puce.professorCheck.ctrl.negocio;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 import org.primefaces.event.SelectEvent;
 
@@ -21,6 +18,8 @@ import ec.edu.puce.professorCheck.modelo.MaestroCiudad;
 import ec.edu.puce.professorCheck.modelo.MaestroPais;
 import ec.edu.puce.professorCheck.modelo.MaestroProvincia;
 import ec.edu.puce.professorCheck.modelo.Planificacion;
+import ec.edu.puce.professorCheck.modelo.PlanificacionMarca;
+import ec.edu.puce.professorCheck.modelo.PlanificacionRuta;
 import ec.edu.puce.professorCheck.modelo.SocioNegocio;
 import ec.edu.puce.professorCheck.servicio.ServicioRol;
 import ec.edu.puce.professorCheck.servicio.ServicioUsuario;
@@ -54,6 +53,7 @@ public class PlanificacionCtrl extends BaseCtrl {
 	private String pais;
 	private String provincia;
 	private String ciudad;
+	private PlanificacionRuta rutaData;
 
 	@PostConstruct
 	public void postConstructor() {
@@ -68,8 +68,25 @@ public class PlanificacionCtrl extends BaseCtrl {
 				planificacion = new Planificacion();
 				planificacion.setEstado(EnumEstado.ACT);
 			} else {
-				planificacion = servicioCrud.findById(planificacionId,
-						Planificacion.class);
+				planificacion = servicioCrud.findById(
+						Long.parseLong(planificacionId), Planificacion.class);
+				PlanificacionRuta planificacionRutaFiltro = new PlanificacionRuta();
+				planificacionRutaFiltro.setIdPlanificacion(planificacion
+						.getId());
+
+				List<PlanificacionRuta> rutasLista = servicioCrud
+						.findOrder(planificacionRutaFiltro);
+
+				planificacion.setRutas(rutasLista);
+				for (PlanificacionRuta ru : planificacion.getRutas()) {
+					PlanificacionMarca planificacionMarcaFiltro = new PlanificacionMarca();
+					planificacionMarcaFiltro.setIdPlanificacion(planificacion
+							.getId());
+					planificacionMarcaFiltro.setIdRuta(ru.getId());
+					List<PlanificacionMarca> marcasLista = servicioCrud
+							.findOrder(planificacionMarcaFiltro);
+					ru.setMarcas(marcasLista);
+				}
 			}
 		}
 		return planificacion;
@@ -82,12 +99,41 @@ public class PlanificacionCtrl extends BaseCtrl {
 	public String guardar() {
 
 		try {
-			Planificacion planiEnBase = servicioCrud.findById(
-					this.planificacion.getId(), Planificacion.class);
-			if (planiEnBase == null) {
-				servicioCrud.insert(planificacion);
+			if (this.planificacion.getId() == null) {
+				List<PlanificacionRuta> rutasPersist = planificacion.getRutas();
+				planificacion.setRutas(null);
+				this.planificacion = servicioCrud.insertReturn(planificacion);
+				for (PlanificacionRuta r : rutasPersist) {
+					r.setPlanificacion(planificacion);
+					r.setIdPlanificacion(planificacion.getId());
+					List<PlanificacionMarca> marcasPersist = r.getMarcas();
+					r.setMarcas(null);
+					r = servicioCrud.insertReturn(r);
+					for (PlanificacionMarca m : marcasPersist) {
+						m.setPlanificacion(planificacion);
+						m.setIdPlanificacion(planificacion.getId());
+						m.setRuta(r);
+						m.setIdRuta(r.getId());
+						servicioCrud.insertReturn(m);
+					}
+				}
 			} else {
-				servicioCrud.update(planificacion);
+				List<PlanificacionRuta> rutasPersist = planificacion.getRutas();
+				planificacion.setRutas(null);
+				this.planificacion = servicioCrud.update(planificacion);
+				for (PlanificacionRuta r : rutasPersist) {
+					r.setPlanificacion(planificacion);
+					r.setIdPlanificacion(planificacion.getId());
+					List<PlanificacionMarca> marcasPersist = r.getMarcas();
+					r.setMarcas(null);
+					r = servicioCrud.update(r);
+					for (PlanificacionMarca m : marcasPersist) {
+						m.setPlanificacion(planificacion);
+						m.setRuta(r);
+						m.setIdRuta(r.getId());
+						servicioCrud.update(m);
+					}
+				}
 			}
 			String m = getBundleMensajes("registro.guardado.correctamente",
 					null);
@@ -137,7 +183,7 @@ public class PlanificacionCtrl extends BaseCtrl {
 	public String editar() {
 		Planificacion planificacionData = (Planificacion) getExternalContext()
 				.getRequestMap().get("item");
-		return "/paginas/planificacion/planificacion?faces-redirect=true&idMateria="
+		return "/paginas/planificacion/planificacion?faces-redirect=true&idPlanificacion="
 				+ planificacionData.getId();
 	}
 
@@ -197,7 +243,13 @@ public class PlanificacionCtrl extends BaseCtrl {
 			filtro.setCodigoCiudad(ciudad);
 			ciudadLista = this.servicioCrud.findOrder(filtro);
 			if (ciudadLista != null && !ciudadLista.isEmpty()) {
-				this.ciudadListaSeleccionada.add(ciudadLista.get(0));
+				PlanificacionRuta ruta = new PlanificacionRuta();
+				ruta.setCodigoCiudad(ciudadLista.get(0).getCodigoCiudad());
+				ruta.setCodigoPais(ciudadLista.get(0).getCodigoPais());
+				ruta.setCodigoProvincia(ciudadLista.get(0).getCodigoProvincia());
+				ruta.setNombreCiudad(ciudadLista.get(0).getNombreCiudad());
+				ruta.setPlanificacion(this.planificacion);
+				this.planificacion.getRutas().add(ruta);
 			}
 		}
 		addInfoMessage("Ciudad Agregada con éxito", "");
@@ -207,9 +259,9 @@ public class PlanificacionCtrl extends BaseCtrl {
 
 	public void eliminarCiudad() {
 		try {
-			MaestroCiudad ciudadData = (MaestroCiudad) getExternalContext()
+			PlanificacionRuta rutaPlanificacionData = (PlanificacionRuta) getExternalContext()
 					.getRequestMap().get("item");
-			ciudadListaSeleccionada.remove(ciudadData);
+			this.planificacion.getRutas().remove(rutaPlanificacionData);
 
 			addInfoMessage(
 					getBundleMensajes("mensaje.informacion.elimina.exito", null),
@@ -221,9 +273,11 @@ public class PlanificacionCtrl extends BaseCtrl {
 
 	public void eliminarCentroCostos() {
 		try {
-			MaestroCentroCosto maestroCentroData = (MaestroCentroCosto) getExternalContext()
+			PlanificacionRuta rutaPlanificacionData = (PlanificacionRuta) getExternalContext()
 					.getRequestMap().get("item");
-			maestroCentroCostoListaSeleccionada.remove(maestroCentroData);
+			PlanificacionMarca rutaPlanificacionMarca = (PlanificacionMarca) getExternalContext()
+					.getRequestMap().get("item2");
+			rutaPlanificacionData.getMarcas().remove(rutaPlanificacionMarca);
 
 			addInfoMessage(
 					getBundleMensajes("mensaje.informacion.elimina.exito", null),
@@ -296,11 +350,30 @@ public class PlanificacionCtrl extends BaseCtrl {
 		this.maestroCentroCostoListaSeleccionada = maestroCentroCostoListaSeleccionada;
 	}
 
+	public void previoAgregaMarca() {
+		rutaData = (PlanificacionRuta) getExternalContext().getRequestMap()
+				.get("item");
+	}
+
 	public void agregarCentroCostos() {
 		try {
 			MaestroCentroCosto maestroCentroCostosData = (MaestroCentroCosto) getExternalContext()
 					.getRequestMap().get("item");
-			maestroCentroCostoListaSeleccionada.add(maestroCentroCostosData);
+			PlanificacionMarca marca = new PlanificacionMarca();
+			marca.setCodigoCentroCostos(maestroCentroCostosData
+					.getCodigoCentroCostos());
+			marca.setCodigoCompania(maestroCentroCostosData.getCodigoCompania());
+			marca.setRuta(rutaData);
+			marca.setPlanificacion(planificacion);
+			marca.setNombreCentroCostos(maestroCentroCostosData
+					.getNombreCentroCostos());
+			rutaData.getMarcas().add(marca);
+			int i = rutaData.getMarcas().size();
+			double porcentaje = 100 / i;
+			for (PlanificacionMarca marc : rutaData.getMarcas()) {
+				marc.setPorcentaje(0.0);
+				marc.setPorcentaje(porcentaje);
+			}
 
 			addInfoMessage("Centro de Costos agregado con éxito", "");
 		} catch (Exception e) {
@@ -353,6 +426,17 @@ public class PlanificacionCtrl extends BaseCtrl {
 
 	public void setCiudad(String ciudad) {
 		this.ciudad = ciudad;
+	}
+
+	public PlanificacionRuta getRutaData() {
+		if (rutaData == null) {
+			rutaData = new PlanificacionRuta();
+		}
+		return rutaData;
+	}
+
+	public void setRutaData(PlanificacionRuta rutaData) {
+		this.rutaData = rutaData;
 	}
 
 }

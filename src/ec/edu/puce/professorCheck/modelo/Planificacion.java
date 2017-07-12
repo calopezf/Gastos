@@ -1,15 +1,20 @@
 package ec.edu.puce.professorCheck.modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
@@ -45,6 +50,9 @@ public class Planificacion implements Serializable {
 	private Integer companiaCodigo;
 	@Column(name = "NmEmpFlg", nullable = true, length = 1)
 	private String flagEmpleado;
+
+	@OneToMany(mappedBy = "planificacion")
+	private List<PlanificacionRuta> rutas;
 
 	public Long getId() {
 		return id;
@@ -108,6 +116,17 @@ public class Planificacion implements Serializable {
 
 	public void setFlagEmpleado(String flagEmpleado) {
 		this.flagEmpleado = flagEmpleado;
+	}
+
+	public List<PlanificacionRuta> getRutas() {
+		if (rutas == null) {
+			rutas = new ArrayList<PlanificacionRuta>();
+		}
+		return rutas;
+	}
+
+	public void setRutas(List<PlanificacionRuta> rutas) {
+		this.rutas = rutas;
 	}
 
 }
