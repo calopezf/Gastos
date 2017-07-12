@@ -5,7 +5,7 @@
 	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
 	<ui:define name="content">
 		<h:form id="formMateriaLista">
-		<h1>Ingreso de Gastos</h1>
+			<h1>Ingreso de Gastos</h1>
 			<p:growl id="msg" autoUpdate="true" />
 			<h:panelGrid columns="1">
 				<h:panelGrid columns="2" id="gridFiltros" style="width: 700px">
@@ -14,17 +14,18 @@
 						<p:inputText style="width:120px"
 							value="#{planificacionCtrl.planificacionFiltro.id}"></p:inputText>
 						<p:outputLabel value="#{etiquetas['nombre']}" />
-						<p:inputText value="#{planificacionCtrl.planificacionFiltro.nombre}"
+						<p:inputText
+							value="#{planificacionCtrl.planificacionFiltro.nombre}"
 							style="width:120px" />
 					</h:panelGrid>
 				</h:panelGrid>
 				<h:panelGrid columns="2">
 					<p:commandButton value="Nuevo Registro"
-						action="/paginas/planificacion/planificacion?faces-redirect=true"
+						action="/paginas/ingresoGastos/ingresoGastos2?faces-redirect=true"
 						title="#{etiquetas['crear.nuevo']}" immediate="true">
 					</p:commandButton>
-					<p:commandButton value="Buscar" action="#{planificacionCtrl.buscar}"
-						title="#{etiquetas.buscar}">
+					<p:commandButton value="Buscar"
+						action="#{planificacionCtrl.buscar}" title="#{etiquetas.buscar}">
 						<p:ajax update="itemsPanel" process="gridFiltros" />
 					</p:commandButton>
 				</h:panelGrid>
@@ -35,9 +36,10 @@
 
 				<p:dataTable id="itemsTable"
 					emptyMessage="#{etiquetas['no.existen.registros']}"
-					value="#{planificacionCtrl.planificacionLista}" var="item" style="width:100%"
+					value="#{planificacionCtrl.planificacionLista}" var="item"
+					style="width:100%"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
-					paginator="true" rows="10" >
+					paginator="true" rows="10">
 					<p:column headerText="#{etiquetas['codigo']}" style="width:100px;">
 						<h:outputText value="G0#{item.id}" />
 					</p:column>
@@ -50,10 +52,12 @@
 					<p:column headerText="#{etiquetas['fecha']}" style="width:150px;">
 						<h:outputText value="#{item.fechaCreacion}" />
 					</p:column>
-					<p:column headerText="Ingresar Gastos" style="width:70px;" styleClass="columnaCentrada">
+					<p:column headerText="Ingresar Gastos" style="width:70px;"
+						styleClass="columnaCentrada">
 						<h:commandLink action="#{planificacionCtrl.ingresarGasto}"
 							title="#{etiquetas.editar}">
-							<h:graphicImage value="/img/edit.png" id="editImage" style="width:20px; height:20px"/>
+							<h:graphicImage value="/img/edit.png" id="editImage"
+								style="width:20px; height:20px" />
 						</h:commandLink>
 					</p:column>
 				</p:dataTable>

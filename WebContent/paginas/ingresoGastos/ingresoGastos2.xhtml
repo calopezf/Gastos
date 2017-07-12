@@ -1,0 +1,258 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/WEB-INF/template.xhtml" xmlns:p="http://primefaces.org/ui">
+
+	<br />
+
+	<ui:define name="content">
+		<h:form id="formUsuario">
+			<div align="center">
+				<h1>Ingreso de Gastos</h1>
+			</div>
+			<p:growl id="growl" autoUpdate="true" />
+			<p:fieldset legend="Información General" style="margin-bottom:20px"
+				toggleable="true">
+				<h:panelGrid columns="2" columnClasses="form-label,form-input">
+
+					<p:outputLabel value="Consecutivo" />
+					<p:outputLabel value="G0061" />
+
+					<p:outputLabel value="Tipo de Documento de gasto:" />
+					<p:selectOneMenu>
+						<f:selectItem itemLabel="Seleccionar" itemValue="Wii U" />
+						<f:selectItem itemLabel="Anticipo" itemValue="" />
+						<f:selectItem itemLabel="Reembolso de Gastos" itemValue="Xbox One" />
+						<f:selectItem itemLabel="Fondo Fijo" itemValue="PS4" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="Fecha de Legalizacion*" />
+					<p:calendar id="fecha" required="true"
+						requiredMessage="#{etiquetas['fecha']} #{mensajes['requerido.masculino']}"
+						style="width:250px">
+					</p:calendar>
+
+					<p:outputLabel value="Cedula" />
+					<p:outputLabel value="1711493278" />
+
+					<p:outputLabel value="Nombre" />
+					<p:outputLabel value="Patricia Godoy" />
+
+					<p:outputLabel value="Concepto*:" />
+					<p:inputTextarea id="concepto" value="Gastos mes julio eventos"
+						cols="55" required="true"
+						requiredMessage="Concepto #{mensajes['requerido.masculino']}">
+						<p:ajax />
+					</p:inputTextarea>
+
+					<p:outputLabel value="Valor Anticipo" />
+					<p:outputLabel value="$800,000.00" />
+				</h:panelGrid>
+				<br />
+			</p:fieldset>
+
+			<p:fieldset legend="Gastos" style="margin-bottom:20px"
+				toggleable="true">
+				<h:panelGroup id="panGroup">
+
+					<h:panelGrid columns="1">
+						<h:panelGrid id="pagBuscado" columns="2">
+
+
+							<p:outputLabel value="Tipo de gastos" />
+							<p:selectOneMenu>
+								<f:selectItem itemLabel="Seleccionar" itemValue="Wii U" />
+								<f:selectItem itemLabel="Alimentacion" itemValue="" />
+								<f:selectItem itemLabel="Transporte" itemValue="Xbox One" />
+								<f:selectItem itemLabel="Hospedaje" itemValue="PS4" />
+								<f:selectItem itemLabel="Varios" itemValue="PS4" />
+
+							</p:selectOneMenu>
+
+
+							<p:outputLabel value="Proveedor" />
+							<h:panelGroup id="panEmp">
+								<h:panelGrid columns="3">
+									<p:inputText
+										requiredMessage="Empleado #{mensajes['requerido.masculino']}"
+										value="#{planificacionCtrl.socioNegocio.idFiscal}  #{planificacionCtrl.socioNegocio.razonSocial}"
+										readonly="true" style="width:390px" />
+									<p:commandButton value="Seleccionar Proveedor"
+										action="#{planificacionCtrl.nuevoEmpleado}" immediate="true"
+										onclick="PF('dlg1').show();"
+										title="Seleccionar nuevo Empleado">
+									</p:commandButton>
+									<p:commandButton value="Nuevo Proveedor" immediate="true"
+										onclick="PF('dlg2').show();" title="Crear nuevo proveedor">
+									</p:commandButton>
+								</h:panelGrid>
+							</h:panelGroup>
+
+
+							<p:outputLabel value="Numero Factura" />
+							<p:inputText value="" />
+
+
+							<p:outputLabel value="Fecha de Factura" />
+							<p:calendar required="true"
+								requiredMessage="#{etiquetas['fecha']} #{mensajes['requerido.masculino']}"
+								style="width:250px">
+							</p:calendar>
+
+							<p:outputLabel value="Moneda" />
+							<p:selectOneMenu>
+								<f:selectItem itemLabel="COP" itemValue="Wii U" />
+								<f:selectItem itemLabel="DOL" itemValue="" />
+							</p:selectOneMenu>
+
+							<p:outputLabel value="Monto" />
+							<p:inputText value="" />
+
+							<p:outputLabel value="Observacion" />
+							<p:inputTextarea cols="55" required="true"
+								requiredMessage="Concepto #{mensajes['requerido.masculino']}">
+								<p:ajax />
+							</p:inputTextarea>
+
+
+							<h:panelGrid columns="3">
+
+								<p:outputLabel value="Adjunto" />
+								<p:growl id="messages" showDetail="true" value="Seleccionar" />
+								<p:fileUpload value="#{ingresoGastosCtrl.file}" mode="simple"
+									skinSimple="true" />
+							</h:panelGrid>
+
+						</h:panelGrid>
+						<p:commandButton value="Agregar Gasto" process="panGroup"
+							title="Agregar Ciudad" update="itemsTable panGroup">
+						</p:commandButton>
+					</h:panelGrid>
+				</h:panelGroup>
+
+				<p:dataTable id="itemsTable"
+					emptyMessage="#{etiquetas['no.existen.registros']}"
+					value="#{planificacionCtrl.planificacion.rutas}" var="item"
+					style="width:100%"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+					paginator="true" rows="10">
+					<p:column headerText="Tipo de Gasto" style="width:50px;">
+						<h:outputText value="#{item.codigoCiudad}" />
+					</p:column>
+					<p:column headerText="Proveedor" style="width:150px;">
+					</p:column>
+					<p:column headerText="NIT" style="width:150px;">
+					</p:column>
+					<p:column headerText="Fecha Factura" style="width:150px;">
+					</p:column>
+
+					<p:column headerText="Numero Factura" style="width:150px;">
+					</p:column>
+					<p:column headerText="Moneda" style="width:150px;" />
+					<p:column headerText="Monto" style="width:150px;" />
+					<p:column headerText="Monto" style="width:150px;" />
+					<p:column headerText="AP/RE" style="width:150px;" />
+
+
+
+
+				</p:dataTable>
+			</p:fieldset>
+
+			<br />
+			<br />
+			<h:outputText value="#{etiquetas['campos.obligatorios']}" />
+
+			<br />
+			<br />
+
+
+		</h:form>
+
+		<p:dialog widgetVar="dlg1" modal="true" height="600" width="1200">
+			<h:form id="formSocioEmpleado">
+				<div align="center">
+					<font size="3" color="#3F51B5">Proveedores</font>
+				</div>
+				<p:dataTable id="itemsTable"
+					emptyMessage="#{etiquetas['no.existen.registros']}"
+					value="#{planificacionCtrl.socioNegocioLista}" var="item"
+					style="width:100%"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+					paginator="true" rows="10">
+					<p:column headerText="#{etiquetas['codigo']}"
+						sortBy="#{item.codigo}" filterBy="#{item.codigo}"
+						style="width:150px;">
+						<h:outputText value="#{item.codigo}" />
+					</p:column>
+					<p:column headerText="Nombres" style="width:150px;"
+						sortBy="#{item.razonSocial}" filterBy="#{item.razonSocial}">
+						<h:outputText value="#{item.razonSocial}" />
+					</p:column>
+					<p:column headerText="#Id Fiscal" style="width:150px;"
+						sortBy="#{item.idFiscal}" filterBy="#{item.idFiscal}">
+						<h:outputText value="#{item.idFiscal}" />
+					</p:column>
+					<p:column headerText="Email" style="width:150px;">
+						<h:outputText value="#{item.mail}" />
+					</p:column>
+					<p:column headerText="Seleccionar" style="width:70px;"
+						styleClass="columnaCentrada">
+						<div align="center">
+							<p:commandButton value="Seleccionar"
+								onclick="PF('dlg1').close();" update=":formUsuario:panEmp"
+								action="#{planificacionCtrl.seleccionarEmpleado}"
+								title="Seleccionar">
+							</p:commandButton>
+						</div>
+					</p:column>
+				</p:dataTable>
+
+			</h:form>
+		</p:dialog>
+
+		<p:dialog widgetVar="dlg2" modal="true" height="300" width="600">
+			<h:form id="formNuevoProveedor">
+				<div align="center">
+					<font size="3" color="#3F51B5">Nuevo Proveedor</font>
+				</div>
+				<h:panelGrid columns="1">
+					<h:panelGrid columns="2">
+
+						<p:outputLabel value="NIT" />
+						<p:inputText value="" />
+
+						<p:outputLabel value="Razon Social" />
+						<p:inputText value="" />
+
+						<p:outputLabel value="Direccion" />
+						<p:inputTextarea cols="55" required="true"
+							requiredMessage="Concepto #{mensajes['requerido.masculino']}">
+							<p:ajax />
+						</p:inputTextarea>
+
+						<p:outputLabel value="Telefono" />
+						<p:inputText value="" />
+
+						<p:outputLabel value="Email" />
+						<p:inputText value="" />
+
+						<p:outputLabel value="Observacion" />
+						<p:inputTextarea cols="55" required="true"
+							requiredMessage="Concepto #{mensajes['requerido.masculino']}">
+							<p:ajax />
+						</p:inputTextarea>
+
+					</h:panelGrid>
+					<p:commandButton value="Ingresar Proveedor"
+						title="Agregar Proveedor">
+					</p:commandButton>
+				</h:panelGrid>
+
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+
+</ui:composition>

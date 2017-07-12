@@ -1,0 +1,254 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/WEB-INF/template.xhtml" xmlns:p="http://primefaces.org/ui">
+
+	<br />
+
+	<ui:define name="content">
+		<h:form id="formUsuario">
+			<div align="center">
+				<h1>Ingreso de Gastos</h1>
+			</div>
+			<p:growl id="growl" autoUpdate="true" />
+			<p:fieldset legend="Información General" style="margin-bottom:20px"
+				toggleable="true">
+				<h:panelGrid columns="2" columnClasses="form-label,form-input">
+
+					<p:outputLabel value="#{etiquetas['nombre']}*:" />
+					<p:inputText id="nombre" style="width:405px"
+						value="#{planificacionCtrl.planificacion.nombre}" required="true"
+						requiredMessage="#{etiquetas['nombre']} #{mensajes['requerido.masculino']}"
+						maxlength="200" size="50">
+						<p:ajax />
+					</p:inputText>
+
+					<p:outputLabel value="Concepto*:" />
+					<p:inputTextarea id="concepto" cols="55"
+						value="#{planificacionCtrl.planificacion.concepto}"
+						required="true"
+						requiredMessage="Concepto #{mensajes['requerido.masculino']}">
+						<p:ajax />
+					</p:inputTextarea>
+
+					<p:outputLabel value="#{etiquetas['fecha']}:*" />
+					<p:calendar id="fecha" required="true"
+						requiredMessage="#{etiquetas['fecha']} #{mensajes['requerido.masculino']}"
+						value="#{planificacionCtrl.planificacion.fechaCreacion}"
+						style="width:250px">
+						<p:ajax event="dateSelect"
+							listener="#{planificacionCtrl.onDateSelect}" />
+					</p:calendar>
+
+					<p:outputLabel value="Empleado*:" />
+					<h:panelGroup id="panEmp">
+						<h:panelGrid columns="2">
+							<p:inputText
+								requiredMessage="Empleado #{mensajes['requerido.masculino']}"
+								value="#{planificacionCtrl.socioNegocio.idFiscal}  #{planificacionCtrl.socioNegocio.razonSocial}"
+								readonly="true" style="width:390px" />
+							<p:commandButton value="Seleccionar Empleado"
+								action="#{planificacionCtrl.nuevoEmpleado}" immediate="true"
+								onclick="PF('dlg1').show();" title="Seleccionar nuevo Empleado">
+							</p:commandButton>
+						</h:panelGrid>
+					</h:panelGroup>
+				</h:panelGrid>
+				<br />
+			</p:fieldset>
+			<p:fieldset legend="Ruta" style="margin-bottom:20px"
+				toggleable="true">
+				<h:panelGroup id="panGroup">
+					<h:panelGrid columns="2">
+						<h:panelGrid id="pagBuscado" columns="2">
+							<p:outputLabel value="País" />
+							<p:selectOneMenu id="pais" value="#{planificacionCtrl.pais}"
+								style="width:410px">
+								<f:selectItem />
+								<f:selectItems value="#{planificacionCtrl.paisLista}" var="item"
+									itemLabel="#{item.nombrePais}" itemValue="#{item.codigo}" />
+								<f:ajax event="change" render="pagBuscado"
+									listener="#{planificacionCtrl.cambiaPais}" />
+							</p:selectOneMenu>
+							<p:outputLabel for="provincia" value="Provincia" />
+							<p:selectOneMenu id="provincia"
+								value="#{planificacionCtrl.provincia}" style="width:410px">
+								<f:selectItem />
+								<f:selectItems value="#{planificacionCtrl.provinciaLista}"
+									var="item" itemLabel="#{item.nombreProvincia}"
+									itemValue="#{item.codigoProvincia}" />
+								<f:ajax event="change" render="pagBuscado"
+									listener="#{planificacionCtrl.cambiaProvincia}" />
+							</p:selectOneMenu>
+							<p:outputLabel for="ciudad" value="Ciudad" />
+							<p:selectOneMenu id="ciudad" value="#{planificacionCtrl.ciudad}"
+								style="width:410px">
+								<f:selectItem />
+								<f:selectItems value="#{planificacionCtrl.ciudadLista}"
+									var="item" itemLabel="#{item.nombreCiudad}"
+									itemValue="#{item.codigoCiudad}" />
+							</p:selectOneMenu>
+						</h:panelGrid>
+						<p:commandButton value="Agregar Ciudad" process="panGroup"
+							action="#{planificacionCtrl.agregarCiudad}"
+							title="Agregar Ciudad" update="itemsTable panGroup">
+						</p:commandButton>
+					</h:panelGrid>
+				</h:panelGroup>
+				<p:dataTable id="itemsTable"
+					emptyMessage="#{etiquetas['no.existen.registros']}"
+					value="#{planificacionCtrl.planificacion.rutas}" var="item"
+					style="width:100%"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+					paginator="true" rows="10">
+					<p:column headerText="#{etiquetas['codigo']}" style="width:50px;">
+						<h:outputText value="#{item.codigoCiudad}" />
+					</p:column>
+					<p:column headerText="Nombre" style="width:150px;">
+						<h:outputText value="#{item.nombreCiudad}" />
+					</p:column>
+
+					<p:column headerText="Marca" style="width:250px;"
+						styleClass="columnaCentrada">
+						<p:commandLink value="Agregar Marca" immediate="true"
+							action="#{planificacionCtrl.previoAgregaMarca}"
+							onclick="PF('dlg2').show();"
+							title="Agrega un nuevo centro de Costos">
+						</p:commandLink>
+						<br />
+						<p:dataTable id="lista" rendered="#{item.marcas.size()>0}"
+							value="#{item.marcas}" var="item2" type="ordered">
+							<p:column headerText="Marca" style="width:230px;">
+								<h:outputText
+									value="#{item2.codigoCentroCostos} #{item2.nombreCentroCostos}" />
+							</p:column>
+							<p:column headerText="Porcentaje" style="width:70px;">
+							<div align="center"></div>
+								<h:inputText value="#{item2.porcentaje}" style="width:70px;" />
+							</p:column>
+
+							<p:column >
+								<p:commandLink value="Eliminar" immediate="true"
+									action="#{planificacionCtrl.eliminarCentroCostos}"
+									update="lista" title="Eliminar Centro de Costos">
+								</p:commandLink>
+							</p:column>
+
+
+						</p:dataTable>
+					</p:column>
+
+					<p:column headerText="Eliminar" style="width:70px;"
+						styleClass="columnaCentrada">
+						<div align="center">
+							<p:commandButton value="Eliminar" immediate="true"
+								action="#{planificacionCtrl.eliminarCiudad()}"
+								update="itemsTable" title="Eliminar Centro de Costos">
+							</p:commandButton>
+						</div>
+					</p:column>
+
+				</p:dataTable>
+			</p:fieldset>
+			<br />
+			<br />
+			<h:outputText value="#{etiquetas['campos.obligatorios']}" />
+
+			<br />
+			<br />
+
+			<div align="center">
+				<p:commandButton value="#{etiquetas.guardar}"
+					action="#{planificacionCtrl.guardar}"
+					title="#{etiquetas['guardar']}" update="growl">
+				</p:commandButton>
+				<p:commandButton value="#{etiquetas.atras}"
+					action="/paginas/planificacion/planificacionLista?faces-redirect=true"
+					title="#{etiquetas['atras']}" immediate="true">
+				</p:commandButton>
+			</div>
+		</h:form>
+
+		<p:dialog widgetVar="dlg1" modal="true" height="600" width="1200">
+			<h:form id="formSocioEmpleado">
+				<div align="center">
+					<font size="3" color="#3F51B5">Empleados</font>
+				</div>
+				<p:dataTable id="itemsTable"
+					emptyMessage="#{etiquetas['no.existen.registros']}"
+					value="#{planificacionCtrl.socioNegocioLista}" var="item"
+					style="width:100%"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+					paginator="true" rows="10">
+					<p:column headerText="#{etiquetas['codigo']}"
+						sortBy="#{item.codigo}" filterBy="#{item.codigo}"
+						style="width:150px;">
+						<h:outputText value="#{item.codigo}" />
+					</p:column>
+					<p:column headerText="Nombres" style="width:150px;"
+						sortBy="#{item.razonSocial}" filterBy="#{item.razonSocial}">
+						<h:outputText value="#{item.razonSocial}" />
+					</p:column>
+					<p:column headerText="#Id Fiscal" style="width:150px;"
+						sortBy="#{item.idFiscal}" filterBy="#{item.idFiscal}">
+						<h:outputText value="#{item.idFiscal}" />
+					</p:column>
+					<p:column headerText="Email" style="width:150px;">
+						<h:outputText value="#{item.mail}" />
+					</p:column>
+					<p:column headerText="Seleccionar" style="width:70px;"
+						styleClass="columnaCentrada">
+						<div align="center">
+							<p:commandButton value="Seleccionar"
+								onclick="PF('dlg1').close();" update=":formUsuario:panEmp"
+								action="#{planificacionCtrl.seleccionarEmpleado}"
+								title="Seleccionar">
+							</p:commandButton>
+						</div>
+					</p:column>
+				</p:dataTable>
+
+			</h:form>
+		</p:dialog>
+
+		<p:dialog widgetVar="dlg2" modal="true" height="600" width="1200">
+			<h:form id="formCentroCostos">
+				<div align="center">
+					<font size="3" color="#3F51B5">Marcas / Centro de Costos</font>
+				</div>
+				<p:dataTable id="itemsTable"
+					emptyMessage="#{etiquetas['no.existen.registros']}"
+					value="#{planificacionCtrl.maestroCentroCostoLista}" var="item"
+					style="width:100%"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+					paginator="true" rows="10">
+					<p:column headerText="#{etiquetas['codigo']}"
+						sortBy="#{item.codigoCentroCostos}"
+						filterBy="#{item.codigoCentroCostos}" style="width:150px;">
+						<h:outputText value="#{item.codigoCentroCostos}" />
+					</p:column>
+					<p:column headerText="Nombre" style="width:150px;"
+						sortBy="#{item.nombreCentroCostos}"
+						filterBy="#{item.nombreCentroCostos}">
+						<h:outputText value="#{item.nombreCentroCostos}" />
+					</p:column>
+
+					<p:column headerText="Seleccionar" style="width:70px;"
+						styleClass="columnaCentrada">
+						<div align="center">
+							<p:commandButton value="Seleccionar"
+								onclick="PF('dlg2').close();" update=":formUsuario"
+								action="#{planificacionCtrl.agregarCentroCostos}"
+								title="Seleccionar">
+							</p:commandButton>
+						</div>
+					</p:column>
+				</p:dataTable>
+
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+
+</ui:composition>
