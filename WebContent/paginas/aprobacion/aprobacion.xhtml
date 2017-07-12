@@ -77,6 +77,36 @@
 						</p:commandButton>
 					</p:column>
 				</p:dataTable>
+				
+				<h1>Anticipos</h1>
+				
+				<p:dataTable id="itemsTable3"
+					emptyMessage="#{etiquetas['no.existen.registros']}"
+					value="#{anticipoCtrl.anticipoLista}" var="item" style="width:100%"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+					paginator="true" rows="10">
+					<p:column headerText="#{etiquetas['codigo']}" style="width:100px;">
+						<h:outputText value="G00#{item.id}" />
+					</p:column>
+					<p:column headerText="Concepto" style="width:150px;">
+						<h:outputText value="#{item.concepto}" />
+					</p:column>
+					<p:column headerText="#{etiquetas['fecha']}" style="width:150px;">
+						<h:outputText value="#{item.fechaCreacion}" />
+					</p:column>
+					
+					<p:column style="width:50px;" styleClass="columnaCentrada">
+						<p:commandButton action="#{anticipoCtrl.editar}" value="Ver "
+							title="Ver Anticipo">
+						</p:commandButton>
+					</p:column>
+					<p:column style="width:70px;" styleClass="columnaCentrada">
+						<p:commandButton action="#{anticipoCtrl.editar}"
+							onclick="if(!confirm('Está seguro que desea aprobar este anticipo'))return false;"
+							value="Aprobar" title="Aprobar Anticipo">
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
 			</h:panelGroup>
 		</h:form>
 	</ui:define>
