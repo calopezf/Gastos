@@ -1,0 +1,113 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="content">
+		<h:form id="formMateriaLista">
+
+			<p:growl id="msg" autoUpdate="true" />
+
+			<h:panelGroup id="itemsPanel">
+
+				<h1>Legalizacion de Gastos</h1>
+				<p:dataTable id="itemsTable"
+					emptyMessage="#{etiquetas['no.existen.registros']}"
+					value="#{planificacionCtrl.planificacionLista}" var="item"
+					style="width:100%"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+					paginator="true" rows="10">
+					<p:column headerText="#{etiquetas['codigo']}" style="width:100px;">
+						<h:outputText value="G00#{item.id}" />
+					</p:column>
+					<p:column headerText="#{etiquetas['nombre']}" style="width:150px;">
+						<h:outputText value="#{item.nombre}" />
+					</p:column>
+					<p:column headerText="Concepto" style="width:150px;">
+						<h:outputText value="#{item.concepto}" />
+					</p:column>
+					<p:column headerText="#{etiquetas['fecha']}" style="width:150px;">
+						<h:outputText value="#{item.fechaCreacion}" />
+					</p:column>
+					<p:column style="width:50px;" styleClass="columnaCentrada">
+						<p:commandButton action="#{planificacionCtrl.editar}" value="Ver "
+							title="Aprobar Planificación">
+						</p:commandButton>
+					</p:column>
+					<p:column style="width:70px;" styleClass="columnaCentrada">
+						<p:commandButton action="#{planificacionCtrl.editar}"
+							onclick="if(!confirm('Está seguro que desea aprobar esta planificación'))return false;"
+							value="Aprobar" title="Contabilizar Gastos">
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+
+				<h1>Fondos Fijos</h1>
+
+				<p:dataTable id="itemsTable2"
+					emptyMessage="#{etiquetas['no.existen.registros']}"
+					value="#{fondoFijoCtrl.fondosFijos}" var="item" style="width:100%"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+					paginator="true" rows="10">
+					<p:column headerText="#{etiquetas['codigo']}" style="width:100px;">
+						<h:outputText value="G00#{item.id}" />
+					</p:column>
+					<p:column headerText="#{etiquetas['nombre']}" style="width:150px;">
+						<h:outputText value="#{item.nombre}" />
+					</p:column>
+					<p:column headerText="Concepto" style="width:150px;">
+						<h:outputText value="#{item.concepto}" />
+					</p:column>
+					<p:column headerText="Monto" style="width:150px;">
+						<h:outputText value="#{item.monto}" />
+					</p:column>
+					<p:column headerText="#{etiquetas['fecha']}" style="width:150px;">
+						<h:outputText value="#{item.fechaCreacion}" />
+					</p:column>
+
+					<p:column style="width:50px;" styleClass="columnaCentrada">
+						<p:commandButton action="#{fondoFijoCtrl.editar}" value="Ver "
+							title="Ver Fondo Fijo">
+						</p:commandButton>
+					</p:column>
+					<p:column style="width:70px;" styleClass="columnaCentrada">
+						<p:commandButton action="#{fondoFijoCtrl.editar}"
+							onclick="if(!confirm('Está seguro que desea aprobar este fondo fijo'))return false;"
+							value="Aprobar" title="Contabilizar Fondo Fijo">
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+
+				<h1>Anticipos</h1>
+
+				<p:dataTable id="itemsTable3"
+					emptyMessage="#{etiquetas['no.existen.registros']}"
+					value="#{anticipoCtrl.anticipoLista}" var="item" style="width:100%"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+					paginator="true" rows="10">
+					<p:column headerText="#{etiquetas['codigo']}" style="width:100px;">
+						<h:outputText value="G00#{item.id}" />
+					</p:column>
+					<p:column headerText="Concepto" style="width:150px;">
+						<h:outputText value="#{item.concepto}" />
+					</p:column>
+					<p:column headerText="#{etiquetas['fecha']}" style="width:150px;">
+						<h:outputText value="#{item.fechaCreacion}" />
+					</p:column>
+
+					<p:column style="width:50px;" styleClass="columnaCentrada">
+						<p:commandButton action="#{anticipoCtrl.editar}" value="Ver "
+							title="Ver Anticipo">
+						</p:commandButton>
+					</p:column>
+					<p:column style="width:70px;" styleClass="columnaCentrada">
+						<p:commandButton action="#{anticipoCtrl.editar}"
+							onclick="if(!confirm('Está seguro que desea aprobar este anticipo'))return false;"
+							value="Aprobar" title="Contabilizar Anticipo">
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</h:panelGroup>
+		</h:form>
+	</ui:define>
+</ui:composition>

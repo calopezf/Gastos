@@ -14,9 +14,9 @@
 						<div align="center">
 							<h:graphicImage value="/img/percos.png"
 								style="width:200px; height:50px;" />
-								<h1>Módulo de Gastos</h1>
+							<h1>Módulo de Gastos</h1>
 						</div>
-						
+
 						<div class="profile">
 							<div>
 								<h:outputText value="#{usuarioCtrl.currentDateObj}">
@@ -28,7 +28,7 @@
 									rendered="#{sesionCtrl.usuarioLogueado.foto!=null}"
 									style="width:45px; height:45px;" />
 							</div>
-							
+
 							<a id="profile-options" href="#"> <span class="profile-name">
 									Usuario Conectado: #{sesionCtrl.remoteUser}</span>
 							</a>
@@ -46,21 +46,24 @@
 						<p:menuitem id="um_conf2" value="Maestros del Proceso"
 							icon="&#xE869;" rendered="#{usuarioCtrl.administrador}"
 							outcome="/paginas/parametrosMaestroProceso/parametroLista.jsf" />
-							<p:menuitem id="um_plan" value="Planificación"
-							icon="&#xE7FB;" rendered="#{usuarioCtrl.administrador}"
+						<p:menuitem id="um_plan" value="Planificación" icon="&#xE7FB;"
+							rendered="#{usuarioCtrl.administrador}"
 							outcome="/paginas/planificacion/planificacionLista.jsf" />
-								<p:menuitem id="um_gasto" value="Ingreso de Gastos"
+						<p:menuitem id="um_gasto" value="Ingreso de Gastos"
 							icon="&#xE561;" rendered="#{usuarioCtrl.administrador}"
 							outcome="/paginas/planificacion/ingresosGastosLista.jsf" />
-								<p:menuitem id="um_fondo" value="Fondo Fijo"
-							icon="&#xE8C9;" rendered="#{usuarioCtrl.administrador}"
+						<p:menuitem id="um_fondo" value="Fondo Fijo" icon="&#xE8C9;"
+							rendered="#{usuarioCtrl.administrador}"
 							outcome="/paginas/fondoFijo/fondoFijoLista.jsf" />
-								<p:menuitem id="um_Antici" value="Anticipos"
-							icon="&#xE8C9;" rendered="#{usuarioCtrl.administrador}"
+						<p:menuitem id="um_Antici" value="Anticipos" icon="&#xE8C9;"
+							rendered="#{usuarioCtrl.administrador}"
 							outcome="/paginas/anticipo/anticipoLista.jsf" />
-							<p:menuitem id="um_Apro" value="Aprobación"
-							icon="&#xE8C9;" rendered="#{usuarioCtrl.administrador}"
+						<p:menuitem id="um_Apro" value="Aprobación" icon="&#xE8C9;"
+							rendered="#{usuarioCtrl.administrador}"
 							outcome="/paginas/aprobacion/aprobacion.jsf" />
+						<p:menuitem id="um_Conta" value="Contabilidad" icon="&#xE8C9;"
+							rendered="#{usuarioCtrl.administrador}"
+							outcome="/paginas/contabilidad/contabilidad.jsf" />
 
 
 					</pu:menu>
