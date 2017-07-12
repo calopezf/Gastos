@@ -51,6 +51,12 @@
 							<p:menuitem id="um_plan" value="Planificación"
 							icon="&#xE7FB;" rendered="#{usuarioCtrl.administrador}"
 							outcome="/paginas/planificacion/planificacionLista.jsf" />
+								<p:menuitem id="um_gasto" value="Ingreso de Gastos"
+							icon="&#xE7FB;" rendered="#{usuarioCtrl.administrador}"
+							outcome="/paginas/planificacion/ingresosGastosLista.jsf" />
+								<p:menuitem id="um_fondo" value="Fondo Fijo"
+							icon="&#xE7FB;" rendered="#{usuarioCtrl.administrador}"
+							outcome="/paginas/fondoFijo/fondoFijoLista.jsf" />
 
 
 					</pu:menu>

@@ -12,5 +12,5 @@ import java.io.Serializable;
  */
 public enum EnumRol implements Serializable {
 
-    ADMINISTRADOR, DOCTOR, PACIENTE, ASISTENTE;
+    ADMINISTRADOR, APROBADOR, COMERCIANTE;
 }

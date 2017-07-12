@@ -737,16 +737,12 @@ public class BaseCtrl implements Serializable {
 		return isUserInRole(EnumRol.ADMINISTRADOR.toString());
 	}
 
-	public boolean isDoctor() {
-		return isUserInRole(EnumRol.DOCTOR.toString());
+	public boolean isComerciante() {
+		return isUserInRole(EnumRol.COMERCIANTE.toString());
 	}
 
-	public boolean isPaciente() {
-		return isUserInRole(EnumRol.PACIENTE.toString());
-	}
-
-	public boolean isAsistente() {
-		return isUserInRole(EnumRol.ASISTENTE.toString());
+	public boolean isAprobador() {
+		return isUserInRole(EnumRol.APROBADOR.toString());
 	}
 
 	protected String generarSeguimiento(Long idSeguimiento) {

@@ -119,16 +119,16 @@
 						<br />
 						<p:dataTable id="lista" rendered="#{item.marcas.size()>0}"
 							value="#{item.marcas}" var="item2" type="ordered">
-							<p:column headerText="Marca" style="width:50px;">
+							<p:column headerText="Marca" style="width:230px;">
 								<h:outputText
 									value="#{item2.codigoCentroCostos} #{item2.nombreCentroCostos}" />
 							</p:column>
-							<p:column headerText="Porcentaje" style="width:30px;">
+							<p:column headerText="Porcentaje" style="width:70px;">
 							<div align="center"></div>
 								<h:inputText value="#{item2.porcentaje}" style="width:70px;" />
 							</p:column>
 
-							<p:column headerText="Porcentaje" style="width:50px;">
+							<p:column >
 								<p:commandLink value="Eliminar" immediate="true"
 									action="#{planificacionCtrl.eliminarCentroCostos}"
 									update="lista" title="Eliminar Centro de Costos">
