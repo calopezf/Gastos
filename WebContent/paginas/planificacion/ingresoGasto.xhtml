@@ -1,0 +1,106 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/WEB-INF/template.xhtml" xmlns:p="http://primefaces.org/ui">
+
+	<br />
+
+	<ui:define name="content">
+		<h:form id="formUsuario">
+			<div align="center">
+				<h1>Planificación</h1>
+			</div>
+			<p:growl id="growl" autoUpdate="true" />
+			<p:fieldset legend="Información General" style="margin-bottom:20px"
+				toggleable="true">
+				<h:panelGrid columns="2" columnClasses="form-label,form-input">
+
+					<p:outputLabel value="#{etiquetas['nombre']}:" />
+					<p:inputText id="nombre" style="width:405px" disabled="true"
+						value="#{planificacionCtrl.planificacion.nombre}" required="true"
+						requiredMessage="#{etiquetas['nombre']} #{mensajes['requerido.masculino']}"
+						maxlength="200" size="50">
+						<p:ajax />
+					</p:inputText>
+
+					<p:outputLabel value="Concepto:" />
+					<p:inputTextarea id="concepto" cols="55" disabled="true"
+						value="#{planificacionCtrl.planificacion.concepto}"
+						required="true"
+						requiredMessage="Concepto #{mensajes['requerido.masculino']}">
+						<p:ajax />
+					</p:inputTextarea>
+
+					<p:outputLabel value="#{etiquetas['fecha']}:" />
+					<p:calendar id="fecha" required="true" disabled="true"
+						requiredMessage="#{etiquetas['fecha']} #{mensajes['requerido.masculino']}"
+						value="#{planificacionCtrl.planificacion.fechaCreacion}"
+						style="width:250px">
+						<p:ajax event="dateSelect"
+							listener="#{planificacionCtrl.onDateSelect}" />
+					</p:calendar>
+
+					<p:outputLabel value="Empleado*:" />
+					<h:panelGroup id="panEmp">
+						<p:inputText disabled="true"
+							requiredMessage="Empleado #{mensajes['requerido.masculino']}"
+							value="#{planificacionCtrl.socioNegocio.idFiscal}  #{planificacionCtrl.socioNegocio.razonSocial}"
+							readonly="true" style="width:390px" />
+					</h:panelGroup>
+				</h:panelGrid>
+				<br />
+			</p:fieldset>
+			<p:fieldset legend="Ruta" style="margin-bottom:20px"
+				toggleable="true">
+				<p:dataTable id="itemsTable"
+					emptyMessage="#{etiquetas['no.existen.registros']}"
+					value="#{planificacionCtrl.planificacion.rutas}" var="item"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+					paginator="true" rows="10">
+					<p:column headerText="#{etiquetas['codigo']}" style="width:150px" >
+						<h:outputText value="#{item.codigoCiudad}" />
+					</p:column>
+					<p:column headerText="Nombre" style="width:200px">
+						<h:outputText value="#{item.nombreCiudad}"  />
+					</p:column>
+
+					<p:column headerText="Marca" 
+						styleClass="columnaCentrada">
+						<br />
+						<p:dataTable id="lista" rendered="#{item.marcas.size()>0}"
+							value="#{item.marcas}" var="item2" type="ordered">
+							<p:column headerText="Marca" >
+								<h:outputText
+									value="#{item2.codigoCentroCostos} #{item2.nombreCentroCostos}" />
+							</p:column>
+							<p:column headerText="Porcentaje" >
+								<p:fileUpload fileUploadListener="#{usuarioCtrl.upload}"
+									mode="simple" sizeLimit="10000000" ></p:fileUpload>
+							</p:column>
+						</p:dataTable>
+					</p:column>
+				</p:dataTable>
+			</p:fieldset>
+			<br />
+			<br />
+			<h:outputText value="#{etiquetas['campos.obligatorios']}" />
+
+			<br />
+			<br />
+
+			<div align="center">
+				<p:commandButton value="#{etiquetas.guardar}"
+					action="#{planificacionCtrl.guardar}"
+					title="#{etiquetas['guardar']}" update="growl">
+				</p:commandButton>
+				<p:commandButton value="#{etiquetas.atras}"
+					action="/paginas/planificacion/planificacionLista?faces-redirect=true"
+					title="#{etiquetas['atras']}" immediate="true">
+				</p:commandButton>
+			</div>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

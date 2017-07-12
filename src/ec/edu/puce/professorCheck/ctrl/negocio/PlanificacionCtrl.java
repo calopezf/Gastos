@@ -195,6 +195,13 @@ public class PlanificacionCtrl extends BaseCtrl {
 		return "/paginas/planificacion/planificacion?faces-redirect=true&idPlanificacion="
 				+ planificacionData.getId();
 	}
+	
+	public String ingresarGasto() {
+		Planificacion planificacionData = (Planificacion) getExternalContext()
+				.getRequestMap().get("item");
+		return "/paginas/planificacion/ingresoGasto?faces-redirect=true&idPlanificacion="
+				+ planificacionData.getId();
+	}
 
 	public void nuevoEmpleado() {
 		this.socioNegocio = new SocioNegocio();
