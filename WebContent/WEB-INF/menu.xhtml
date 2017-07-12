@@ -11,7 +11,6 @@
 				<div class="nano-content menu-scroll-content">
 					<ui:fragment
 						rendered="#{guestPreferences.profileMode == 'inline' and guestPreferences.menuLayout != 'menu-layout-static menu-layout-horizontal'}">
-						<br />
 						<div align="center">
 							<h:graphicImage value="/img/percos.png"
 								style="width:200px; height:50px;" />
@@ -29,11 +28,10 @@
 									rendered="#{sesionCtrl.usuarioLogueado.foto!=null}"
 									style="width:45px; height:45px;" />
 							</div>
+							
 							<a id="profile-options" href="#"> <span class="profile-name">
-									#{sesionCtrl.usuarioLogueado.nombre}
-									#{sesionCtrl.usuarioLogueado.apellido}</span>
+									Usuario Conectado: #{sesionCtrl.remoteUser}</span>
 							</a>
-
 
 						</div>
 					</ui:fragment>
@@ -60,7 +58,7 @@
 								<p:menuitem id="um_Antici" value="Anticipos"
 							icon="&#xE8C9;" rendered="#{usuarioCtrl.administrador}"
 							outcome="/paginas/fondoFijo/fondoFijoLista.jsf" />
-							<p:menuitem id="um_Apro" value="Aprobacion"
+							<p:menuitem id="um_Apro" value="Aprobación"
 							icon="&#xE8C9;" rendered="#{usuarioCtrl.administrador}"
 							outcome="/paginas/fondoFijo/fondoFijoLista.jsf" />
 

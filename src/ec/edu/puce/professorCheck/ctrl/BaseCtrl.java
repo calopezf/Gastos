@@ -447,7 +447,7 @@ public class BaseCtrl implements Serializable {
 	 * @return
 	 *
 	 */
-	protected String getRemoteUser() {
+	public String getRemoteUser() {
 
 		return getExternalContext().getRemoteUser();
 
