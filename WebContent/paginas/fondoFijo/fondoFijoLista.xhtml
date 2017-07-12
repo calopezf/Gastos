@@ -5,52 +5,41 @@
 	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
 	<ui:define name="content">
 		<h:form id="formMateriaLista">
-
+		<h1>Fondos Fijos</h1>
 			<p:growl id="msg" autoUpdate="true" />
+			<h:panelGrid columns="1">
+				<h:panelGrid columns="2" id="gridFiltros" style="width: 700px">
+					<h:panelGrid columns="2" columnClasses="form-label,form-input">
+						<p:outputLabel value="#{etiquetas['codigo']}" />
+						<p:inputText style="width:120px"
+							value="#{fondoFijoCtrl.fondoFijoFiltro.id}"></p:inputText>
+						<p:outputLabel value="#{etiquetas['nombre']}" />
+						<p:inputText value="#{fondoFijoCtrl.fondoFijoFiltro.nombre}"
+							style="width:120px" />
+					</h:panelGrid>
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<p:commandButton value="Nuevo Registro"
+						action="/paginas/fondoFijo/fondoFijo?faces-redirect=true"
+						title="#{etiquetas['crear.nuevo']}" immediate="true">
+					</p:commandButton>
+					<p:commandButton value="Buscar" action="#{fondoFijoCtrl.buscar}"
+						title="#{etiquetas.buscar}">
+						<p:ajax update="itemsPanel" process="gridFiltros" />
+					</p:commandButton>
+				</h:panelGrid>
+			</h:panelGrid>
 
 			<h:panelGroup id="itemsPanel">
 
-				<h1>Planificaciones</h1>
+
 				<p:dataTable id="itemsTable"
-					emptyMessage="#{etiquetas['no.existen.registros']}"
-					value="#{planificacionCtrl.planificacionLista}" var="item"
-					style="width:100%"
-					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
-					paginator="true" rows="10">
-					<p:column headerText="#{etiquetas['codigo']}" style="width:100px;">
-						<h:outputText value="G00#{item.id}" />
-					</p:column>
-					<p:column headerText="#{etiquetas['nombre']}" style="width:150px;">
-						<h:outputText value="#{item.nombre}" />
-					</p:column>
-					<p:column headerText="Concepto" style="width:150px;">
-						<h:outputText value="#{item.concepto}" />
-					</p:column>
-					<p:column headerText="#{etiquetas['fecha']}" style="width:150px;">
-						<h:outputText value="#{item.fechaCreacion}" />
-					</p:column>
-					<p:column style="width:50px;" styleClass="columnaCentrada">
-						<p:commandButton action="#{planificacionCtrl.editar}" value="Ver "
-							title="Aprobar Planificación">
-						</p:commandButton>
-					</p:column>
-					<p:column style="width:70px;" styleClass="columnaCentrada">
-						<p:commandButton action="#{planificacionCtrl.editar}"
-							onclick="if(!confirm('Está seguro que desea aprobar esta planificación'))return false;"
-							value="Aprobar" title="Aprobar Planificación">
-						</p:commandButton>
-					</p:column>
-				</p:dataTable>
-
-				<h1>Fondos Fijos</h1>
-
-				<p:dataTable id="itemsTable2"
 					emptyMessage="#{etiquetas['no.existen.registros']}"
 					value="#{fondoFijoCtrl.fondosFijos}" var="item" style="width:100%"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
-					paginator="true" rows="10">
+					paginator="true" rows="10" >
 					<p:column headerText="#{etiquetas['codigo']}" style="width:100px;">
-						<h:outputText value="G00#{item.id}" />
+						<h:outputText value="#{item.id}" />
 					</p:column>
 					<p:column headerText="#{etiquetas['nombre']}" style="width:150px;">
 						<h:outputText value="#{item.nombre}" />
@@ -64,17 +53,24 @@
 					<p:column headerText="#{etiquetas['fecha']}" style="width:150px;">
 						<h:outputText value="#{item.fechaCreacion}" />
 					</p:column>
-					
-					<p:column style="width:50px;" styleClass="columnaCentrada">
-						<p:commandButton action="#{fondoFijoCtrl.editar}" value="Ver "
-							title="Ver Fondo Fijo">
-						</p:commandButton>
+					<p:column headerText="#{etiquetas['estado']}" style="width:100px;">
+						<h:outputText value="#{etiquetas[item.estado.etiqueta]}" />
 					</p:column>
-					<p:column style="width:70px;" styleClass="columnaCentrada">
-						<p:commandButton action="#{fondoFijoCtrl.editar}"
-							onclick="if(!confirm('Está seguro que desea aprobar este fondo fijo'))return false;"
-							value="Aprobar" title="Aprobar Fondo Fijo">
-						</p:commandButton>
+				
+					<p:column headerText="#{etiquetas['editar']}" style="width:70px;" styleClass="columnaCentrada">
+						<h:commandLink action="#{fondoFijoCtrl.editar}"
+							title="#{etiquetas.editar}">
+							<h:graphicImage value="/img/edit.png" id="editImage" style="width:20px; height:20px"/>
+						</h:commandLink>
+					</p:column>
+					<p:column  style="width:70px;" styleClass="columnaCentrada"
+						headerText="#{etiquetas['eliminar.sistema']}">
+						<h:commandLink actionListener="#{fondoFijoCtrl.eliminarFondoFijo}"
+							title="#{etiquetas['eliminar.sistema']}"
+							onclick="if(!confirm('#{mensajes['esta.seguro']}'))return false;">
+							<h:graphicImage value="/img/delete.png" id="trashImage" style="width:20px; height:20px"/>
+							<f:ajax render="@form" />
+						</h:commandLink>
 					</p:column>
 				</p:dataTable>
 			</h:panelGroup>
